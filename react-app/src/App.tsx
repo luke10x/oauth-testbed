@@ -109,13 +109,8 @@ const TokenForm: FC<TokenFormProps> = ({ code, state }) => {
       }
     })
     .then(data => {
-      // Work with JSON data here
       console.log(data);
       setAccessToken(data.access_token)
-      // document.cookie = `auth.access_token=${data.access_token}; HttpOnly`;
-      // document.cookie = `auth.access_token=${data.access_token}`;
-
-      
     })
     .catch(error => {
       // Handle errors here
@@ -142,7 +137,7 @@ interface BackendRequestProps {
 }
 const BackendRequest: FC<BackendRequestProps> = ({ accessToken}) => {
   const handleApiCall = () => {
-    fetch('http://localhost:18080/', {
+    fetch('http://localhost:18080/secret', {
       headers: {
         'Authorization': `Bearer ${accessToken}`
       }
@@ -202,7 +197,7 @@ function ExampleApp() {
         <StandardField param="response_type" value="code" />
         <StandardField param="client_id" value="reactclient" />
         <StandardField param="redirect_uri" value={redirectUri} />
-        <StandardField param="scope" value={"openid profile"} />
+        <StandardField param="scope" value={"openid profile messages"} />
         <StandardField param="state" value={stateString||"state-not-set"} />
         <StandardField param="code_challenge" value={codeChallenge||"pending-challenge"} />
         <StandardField param="code_challenge_method" value="S256" />

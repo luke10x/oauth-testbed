@@ -12,3 +12,6 @@ Keycloak is not obvious to configure:
 
 - To export entire realm: Realm Settings -> Action (Top Right) -> Partial export
 - To export client: Clients -> [three-dots for each client] -> Export
+
+
+[How to configure Keycloak container](https://www.keycloak.org/server/containers)
