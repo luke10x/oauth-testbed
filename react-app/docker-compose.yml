@@ -1,0 +1,16 @@
+version: "3.7"
+services:
+  start:
+    image: node
+    volumes:
+      - ".:/mnt/start"
+    working_dir: "/mnt/start"
+    environment:
+      PORT: '3000'
+      HTTPS: 'false'
+    ports:
+      - 3000:3000
+    entrypoint: "/bin/bash -c"
+    command:
+      - |
+        npm start

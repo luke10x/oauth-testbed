@@ -1,0 +1,173 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   width="220"
+   height="100"
+   viewBox="0 0 58.208332 26.458333"
+   version="1.1"
+   id="svg10890"
+   sodipodi:docname="start-logo-light.svg"
+   inkscape:version="1.2.1 (9c6d41e, 2022-07-14)"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <sodipodi:namedview
+     id="namedview10892"
+     pagecolor="#ffffff"
+     bordercolor="#000000"
+     borderopacity="0.25"
+     inkscape:showpageshadow="2"
+     inkscape:pageopacity="0.0"
+     inkscape:pagecheckerboard="0"
+     inkscape:deskcolor="#d1d1d1"
+     inkscape:document-units="mm"
+     showgrid="false"
+     inkscape:zoom="1.2646927"
+     inkscape:cx="-64.04718"
+     inkscape:cy="51.395885"
+     inkscape:window-width="1309"
+     inkscape:window-height="456"
+     inkscape:window-x="177"
+     inkscape:window-y="393"
+     inkscape:window-maximized="0"
+     inkscape:current-layer="layer1" />
+  <defs
+     id="defs10887" />
+  <g
+     inkscape:label="Layer 1"
+     inkscape:groupmode="layer"
+     id="layer1">
+    <g
+       id="g13237"
+       transform="matrix(0.96349456,0,0,0.95572569,1.7973839,0.30313039)">
+      <g
+         id="g1093"
+         transform="matrix(0.47066909,0,0,0.47066909,-4.4635336,-3.8394849)">
+        <g
+           id="color">
+          <path
+             fill="#fcea2b"
+             stroke="#fcea2b"
+             stroke-miterlimit="10"
+             stroke-width="1.8"
+             d="m 36.1089,44.1242 c 0,0 21.3368,-0.7112 10.6684,-20.6256 0,0 -2.8449,-7.8235 -10.6684,-7.8235 -2.2075,0 -4.0187,0.5096 -5.4973,1.2733 -3.7618,1.9427 -5.3718,5.5292 -5.8823,6.5502 -0.7113,1.4225 -11.3797,19.2032 11.3796,20.6256 z"
+             id="path1042" />
+          <path
+             fill="#f1b31c"
+             stroke="none"
+             d="m 35.3719,30.6032 c 0,0 5.9251,-0.2907 0,5.2324 0,0 -5.9251,-5.2324 0,-5.2324 z"
+             id="path1044" />
+          <path
+             fill="#ffffff"
+             stroke="none"
+             d="M 61.6942,37.9501 C 61.6942,52.3371 50.0313,64 35.6443,64 21.2573,64 9.5944,52.3371 9.5944,37.9501 l 7.4428,3.7214 6.5125,-4.6518 8.3732,5.5821 6.2024,-5.5821 8.1758,4.7364 7.0199,-5.6667 z"
+             id="path1046" />
+          <path
+             fill="#d0cfce"
+             stroke="none"
+             d="M 53.321,36.0894 C 51.3406,47.7279 46.2215,57.4929 35.6443,64 50.0313,64 61.6942,52.337 61.6942,37.9501 Z"
+             id="path1048" />
+        </g>
+        <g
+           id="hair" />
+        <g
+           id="skin" />
+        <g
+           id="skin-shadow" />
+        <g
+           id="line">
+          <circle
+             cx="30.908001"
+             cy="26.3629"
+             r="2.3682001"
+             fill="#000000"
+             stroke="none"
+             id="circle1054" />
+          <circle
+             cx="40.380699"
+             cy="26.3629"
+             r="2.3682001"
+             fill="#000000"
+             stroke="none"
+             id="circle1056" />
+          <line
+             x1="34.796299"
+             x2="33.433399"
+             y1="14.9035"
+             y2="9.7856998"
+             fill="none"
+             stroke="#000000"
+             stroke-linecap="round"
+             stroke-linejoin="round"
+             stroke-miterlimit="10"
+             stroke-width="2"
+             id="line1058" />
+          <line
+             x1="36.8284"
+             x2="36.8284"
+             y1="15.7062"
+             y2="12.1539"
+             fill="none"
+             stroke="#000000"
+             stroke-linecap="round"
+             stroke-linejoin="round"
+             stroke-miterlimit="10"
+             stroke-width="2"
+             id="line1060" />
+          <line
+             x1="38.999199"
+             x2="40.380699"
+             y1="15.9035"
+             y2="9.7856998"
+             fill="none"
+             stroke="#000000"
+             stroke-linecap="round"
+             stroke-linejoin="round"
+             stroke-miterlimit="10"
+             stroke-width="2"
+             id="line1062" />
+          <path
+             fill="none"
+             stroke="#000000"
+             stroke-linecap="round"
+             stroke-linejoin="round"
+             stroke-miterlimit="10"
+             stroke-width="2"
+             d="m 35.3719,30.6032 c 0,0 5.9251,-0.2907 0,5.2324 0,0 -5.9251,-5.2324 0,-5.2324 z"
+             id="path1064" />
+          <path
+             fill="none"
+             stroke="#000000"
+             stroke-linecap="round"
+             stroke-linejoin="round"
+             stroke-miterlimit="10"
+             stroke-width="2"
+             d="m 49.7637,33.4191 c 0.0286,-2.6167 -0.8175,-5.8717 -2.9865,-9.9204 0,0 -2.8449,-7.8235 -10.6684,-7.8235 -2.2075,0 -4.0187,0.5096 -5.4973,1.2733 -3.7618,1.9427 -5.3718,5.5292 -5.8823,6.5502 -0.3479,0.6959 -3.0787,5.3065 -3.1133,10.0017"
+             id="path1066" />
+          <path
+             fill="none"
+             stroke="#000000"
+             stroke-linecap="round"
+             stroke-linejoin="round"
+             stroke-miterlimit="10"
+             stroke-width="2"
+             d="M 61.6942,37.9501 C 61.6942,52.3371 50.0313,64 35.6443,64 21.2573,64 9.5944,52.3371 9.5944,37.9501 l 7.4428,3.7214 6.5125,-4.6518 8.3732,5.5821 6.2024,-5.5821 8.1758,4.7364 7.0199,-5.6667 z"
+             id="path1068" />
+        </g>
+      </g>
+      <text
+         xml:space="preserve"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:19.5986px;font-family:Skia;-inkscape-font-specification:'Skia, @wght=0.72,wdth=0.73';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;font-variation-settings:'wdth' 0.73, 'wght' 0.72;fill:#000000;fill-opacity:1;stroke-width:0.229458;stroke-dasharray:none"
+         x="24.574041"
+         y="26.186445"
+         id="text4240"><tspan
+           sodipodi:role="line"
+           id="tspan4238"
+           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:19.5986px;font-family:Skia;-inkscape-font-specification:'Skia, @wght=0.72,wdth=0.73';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;font-variation-settings:'wdth' 0.73, 'wght' 0.72;stroke-width:0.229458;stroke-dasharray:none"
+           x="24.574041"
+           y="26.186445">START</tspan></text>
+    </g>
+  </g>
+</svg>

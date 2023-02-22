@@ -1,0 +1,22 @@
+.btn {
+  @apply font-bold py-2 px-4 rounded;
+}
+.btn-blue {
+  @apply bg-blue-500 dark:bg-blue-900 text-white;
+}
+.btn-blue:hover {
+  @apply bg-blue-700;
+}
+
+.bg-my-semi {
+  @apply bg-neutral-50/[.97] dark:bg-slate-900/[.97];
+}
+
+.bg-my-solid {
+  @apply bg-neutral-50 dark:bg-slate-900;
+}
+
+.color-my-input {
+  @apply bg-white dark:bg-slate-500
+    text-black dark:text-white; 
+}

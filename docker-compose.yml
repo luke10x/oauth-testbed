@@ -1,0 +1,43 @@
+version: "3.7"
+services:
+  reactapp:
+    image: node
+    volumes:
+      - "./react-app:/mnt/reactapp"
+    working_dir: "/mnt/reactapp"
+    environment:
+      PORT: '13000'
+      HTTPS: 'true'
+    ports:
+      - 13000:13000
+    entrypoint: "/bin/bash -c"
+    command:
+      - |
+        npm start
+
+  storyapi:
+    build:
+      context: ./story-api
+      dockerfile: Dockerfile
+    working_dir: /app
+    ports:
+      - "18080:8080"
+    entrypoint: "/bin/bash -c"
+    command:
+      - |
+        pwd
+        ls -las
+        #java -jar app.jar
+        ./gradlew runBoot --stacktrace
+
+  keycloak:
+    image: quay.io/keycloak/keycloak:20.0.3
+    environment:
+      # KEYCLOAK_USER: admin
+      # KEYCLOAK_PASSWORD: admin
+      KEYCLOAK_ADMIN: admin
+      KEYCLOAK_ADMIN_PASSWORD: admin
+    ports:
+      - "28080:8080"
+      - "28443:8443"
+    command: start-dev
