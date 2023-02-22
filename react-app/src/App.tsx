@@ -142,7 +142,7 @@ interface BackendRequestProps {
 }
 const BackendRequest: FC<BackendRequestProps> = ({ accessToken}) => {
   const handleApiCall = () => {
-    fetch('http://localhost:8080/', {
+    fetch('http://localhost:18080/', {
       headers: {
         'Authorization': `Bearer ${accessToken}`
       }

@@ -27,8 +27,8 @@ services:
       - |
         pwd
         ls -las
-        #java -jar app.jar
-        ./gradlew runBoot --stacktrace
+        java -jar app.jar
+        # ./gradlew runBoot --stacktrace
 
   keycloak:
     image: quay.io/keycloak/keycloak:20.0.3
@@ -37,7 +37,9 @@ services:
       # KEYCLOAK_PASSWORD: admin
       KEYCLOAK_ADMIN: admin
       KEYCLOAK_ADMIN_PASSWORD: admin
+    volumes:
+      - "./keycloak:/opt/keycloak/data/import"
     ports:
       - "28080:8080"
       - "28443:8443"
-    command: start-dev
+    command: start-dev --import-realm

@@ -38,10 +38,11 @@ public class SecurityConfig {
           .oauth2ResourceServer(oauth2 -> oauth2
               .jwt(jwt -> jwt
                   .jwkSetUri("http://0.0.0.0:28080/realms/bigrealm/protocol/openid-connect/certs")
+                  .jwkSetUri("http://keycloak:8080/realms/bigrealm/protocol/openid-connect/certs")
               )
-              // .bearerTokenResolver(this::tokenExtractor)
+              .bearerTokenResolver(this::tokenExtractor)
           )
-          .cors().and().csrf().disable();
+          .cors().and().csrf().disable(); // disable Cors
 
           
       return http.build();
