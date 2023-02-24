@@ -15,3 +15,4 @@ Keycloak is not obvious to configure:
 
 
 [How to configure Keycloak container](https://www.keycloak.org/server/containers)
+[Spring OAuthh docs](https://docs.spring.io/spring-security/reference/servlet/oauth2/resource-server/index.html)

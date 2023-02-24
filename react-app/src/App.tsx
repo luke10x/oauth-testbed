@@ -6,6 +6,7 @@ import { store } from './app/store';
 import { modeSelector } from './mode/slice';
 import { useAppSelector } from './app/hooks';
 import { FC, useEffect, useState } from 'react';
+import Testbed from './testbed/Testbed';
 
 const OIDC_AUTH = 'http://localhost:28080/realms/bigrealm'
 
@@ -222,6 +223,8 @@ function FirstPage() {
         <h1 className="text-3xl text-black dark:text-white font-bold underline">
           Start new app!
         </h1>
+        TB
+        <Testbed />/TB
         <ExampleApp />
 
         <h3 className="text-slate-900 text-black dark:text-white mt-5 text-base font-medium tracking-tight">Writes Upside-Down</h3>
