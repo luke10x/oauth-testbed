@@ -1,63 +1,44 @@
-import { FC, useEffect } from "react";
-import React, { useState } from "react";
-import { useSelector, useDispatch } from "react-redux";
-import { addSession, fetchSessionsThunk, sessionSelector, SessionsState } from "./slice/index";
+import { FC, useEffect, useState } from "react";
+import { restoreSessions, Session } from "./slice/index";
 import { useAppDispatch } from "../app/hooks";
+import { SessionCreator } from "./SessionCreator";
+import { SessionCard } from "./SessionCard";
+import CodeDetector from "./CodeDetector";
 
-interface TestbedProps {
-}
+interface TestbedProps {}
 const Testbed: FC<TestbedProps> = () => {
+  const data = sessionStorage.getItem('my-sessions')
+  const storedSessions: Session[] = data === null ? [] : JSON.parse(data)
 
+  const [ sessions, setSessions ] = useState<Session[]>(storedSessions)
 
-  // State for new session name
-  const [newSessionName, setNewSessionName] = useState("")
-
-  const session = useSelector(sessionSelector)
-
-  // Dispatch function for adding a new session
+  
   const dispatch = useAppDispatch()
-
   useEffect(() => {
-    dispatch(fetchSessionsThunk())
+    dispatch(restoreSessions(storedSessions))
+    // setSessions(storedSessions)
   }, [])
-  const handleAddSession = (event: React.FormEvent<HTMLFormElement>) => {
-    event.preventDefault()
-    dispatch(addSession(newSessionName))
-    setNewSessionName("")
-  }
 
   return (
     <div>
       <h1>User Sessions</h1> 
-      
-      {session.loading === false && <div>
-        {session.sessions.map((session) => (
-          <div key={session.id}>
-            <h3>{session.name}</h3>
-            <p>ID: {session.id}</p>
-            {/* TODO: Add additional session details as needed */}
-          </div>
+      <CodeDetector />
+      <div>
+        {sessions.map((session) => (
+          <SessionCard
+              key={session.stateString}
+              stateString={session.stateString}
+              // codeVerifier={session.codeVerifier} 
+              // token={session.accessToken} 
+            />
         ))}
-      </div>}
-      {session.loading === true && <div>Loading...</div>}
+      </div>
+      
       <hr />
-      <form onSubmit={handleAddSession}>
-        <label>
-          New Session Name:
-          <input
-            type="text"
-            value={newSessionName}
-            onChange={(event) => setNewSessionName(event.target.value)}
-          />
-        </label>
-        <button type="submit">Create Session</button>
-      </form>
+
+      <SessionCreator />
     </div>
   )
 }
 
 export default Testbed;
-function createThunk(arg0: string, arg1: () => SessionsState) {
-  throw new Error("Function not implemented.");
-}
-
