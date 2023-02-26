@@ -18,7 +18,7 @@ export interface SessionsState {
   // apiRequestInProgress: boolean
   api: {
     data: any
-    state: "ready" | "loading" | "completed"
+    state: "ready" | "customizing" | "loading" | "completed"
   }
   redirect?: {
     code: string
@@ -73,7 +73,7 @@ export const apiRequestThunk = createAsyncThunk(
     const response = await fetch(endpoint, { headers })
     const text = await response.text()
     console.log ({response, text})
-    return response
+    return text
   }
 )
 
@@ -99,9 +99,14 @@ const sessionsSlice = createSlice({
     restoreSessions: (state, action: PayloadAction<Session[]>) => {
       state.sessions = action.payload
     },
-    resetApiRequest: (state, _action) => {
+    resetApiRequest: (state) => {
       state.api.data = undefined
       state.api.state = "ready"
+    },
+
+    startCustomizingApiRequest: (state) => {
+      state.api.data = undefined
+      state.api.state = "customizing"
     }
   },
   extraReducers: (builder) => {
@@ -116,6 +121,7 @@ const sessionsSlice = createSlice({
   },
 });
 
+export const startCustomizingApiRequest = sessionsSlice.actions.startCustomizingApiRequest
 export const resetApiRequest = sessionsSlice.actions.resetApiRequest
 export const addSession = sessionsSlice.actions.addSession
 export const restoreSessions = sessionsSlice.actions.restoreSessions

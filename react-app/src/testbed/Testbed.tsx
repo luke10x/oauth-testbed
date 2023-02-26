@@ -33,7 +33,6 @@ const Testbed: FC<TestbedProps> = () => {
       </div>
       <p>Web Requests:</p>
       <div className="flex flex-col ">
-
         <div className="flex justify-center">
           <RequestCreator />
         </div>

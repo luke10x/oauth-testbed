@@ -1,7 +1,7 @@
 import { FC, useEffect, useState } from "react"
 import { useAppDispatch, useAppSelector } from "../app/hooks";
 import { backendUrlBase } from "./config";
-import { allKnownTokensSelector, apiRequestThunk, resetApiRequest } from "./slice";
+import { allKnownTokensSelector, apiRequestThunk, resetApiRequest, startCustomizingApiRequest } from "./slice";
 import { Spinner } from "./Spinner";
 
 interface CreateApiRequestButtonProps {
@@ -93,55 +93,32 @@ const ApiResponse: FC<ApiResponseProps> = () => {
   )
 }
 
-type Stage = "CallToAction" | "Configuring" | "Pending" | "Completed"
-
 interface RequestCreatorProps {}
 export const RequestCreator: FC<RequestCreatorProps> = () => {
-  const [stage, setStage] = useState<Stage>("CallToAction")
 
   const accessTokens = useAppSelector(allKnownTokensSelector)
   const dispatch = useAppDispatch()
+  const { state } = useAppSelector(state => state.session.api)
 
-  // const [accessTokens, setAccessTokens] = useState<string[]>([])
-  const handleClick = () => {
-    setStage("Configuring")
-    // setAccessTokens(tokens)
-  }
-
-  const { data, state } = useAppSelector(state => state.session.api)
-
-  const handleConfigured = (endpoint: string, accessToken?: string) => {
-    dispatch(apiRequestThunk({ endpoint, accessToken }))
-    setStage("Pending")
-  }
-
-  useEffect(() => {
-    console.log("State change detected", {state})
-    if (state === "completed") {
-      setStage("Completed")
-    }
-  }, [ state ])
-
-  const handleDismiss = () => {
-    dispatch(resetApiRequest)
-    setStage("CallToAction")
-  }
-
+  const handleClick = () => dispatch(startCustomizingApiRequest())
+  const handleConfigured = (endpoint: string, accessToken?: string) => dispatch(
+    apiRequestThunk({ endpoint, accessToken })
+  )
+  const handleDismiss = () => dispatch(resetApiRequest())
+  
   return (
     <div>
-      {stage === "CallToAction" 
-        && <CreateApiRequestButton onClick={handleClick}/>}
-      {stage === "Configuring" 
-        && <CardForm accessTokens={accessTokens} onConfigured={handleConfigured}/>}
-      {stage === "Pending" && <Spinner />}
-      {stage === "Completed" && <>
-        <ApiResponse />
-        <button className="bg-gray-500 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
-          onClick={handleDismiss}
-          type="button">
-          Great!
-        </button>
-      </>}
+        {state === "ready" && <CreateApiRequestButton onClick={handleClick}/>}
+        {state === "customizing" && <CardForm accessTokens={accessTokens} onConfigured={handleConfigured}/>}
+        {state === "loading" && <Spinner />}
+        {state === "completed" && <>
+          <ApiResponse />
+          <button className="bg-gray-500 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+            onClick={handleDismiss}
+            type="button">
+            Great!
+          </button>
+        </>}
     </div>
   )
 }
