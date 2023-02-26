@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect } from 'react';
 import { useAppDispatch } from '../app/hooks';
 import { addCodeFromRedirect } from './slice';
 
@@ -9,7 +9,6 @@ const CodeDetector: React.FC<CodeDetectorProps> = ({ }) => {
 
   const code = new URLSearchParams(window.location.search).get('code');
   const state = new URLSearchParams(window.location.search).get('state');
-  
 
   useEffect(() => {
     if (code && state) {

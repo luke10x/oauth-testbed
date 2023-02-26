@@ -86,13 +86,10 @@ export const SessionCard: React.FC<SessionCardProps> = ({
 
         {canGetToken && <FetchTokenButton onClick={handleFetchToken}/>}
         {accessToken && (
-          <>
           <div className="flex justify-between">
             <span className="text-gray-600">Token:</span>
             <span className="font-medium">{accessToken}</span>
           </div>
-          <BackendRequest accessToken={accessToken} />
-          </>
         )}
       </div>
     </div>

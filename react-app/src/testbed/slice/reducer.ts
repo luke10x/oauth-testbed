@@ -1,5 +1,6 @@
 import { createAsyncThunk, createListenerMiddleware, createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { RootState } from "../../app/store";
+import { restrictedBackendEndpoint } from "../config";
 
 export interface SessionAuthentication {
   state: "editable" | "waitingForPkce" | "dipatched" | "completed"
@@ -49,6 +50,24 @@ interface AttachTokenPayload {
   accessToken: string
 }
 
+interface ApiRequestThunkParams {
+  endpoint: string
+  accessToken?: string
+}
+export const apiRequestThunk = createAsyncThunk(
+  'session/kukuraku',
+  async ({endpoint, accessToken}: ApiRequestThunkParams, _thunkApi) => {
+    const headers: HeadersInit = accessToken
+    ? { 'Authorization': `Bearer ${accessToken}` }
+    : {}
+    console.log({headers})
+    const response = await fetch(endpoint, { headers })
+    const text = await response.text()
+    console.log ({response, text})
+    return response
+  }
+)
+
 const sessionsSlice = createSlice({
   name: "sessions",
   initialState,
@@ -73,11 +92,11 @@ const sessionsSlice = createSlice({
     }
   },
   extraReducers: (builder) => {
-    // builder.addCase(fetchSessionsThunk.pending, (state, action) => {
-    //   state.loading = true
-    //   state.sessions = []
-    //   return state
-    // })
+    builder.addCase(apiRequestThunk.pending, (state, action) => {
+      state.loading = true
+      state.sessions = []
+      return state
+    })
     // builder.addCase(fetchSessionsThunk.fulfilled, (state, action) => {
     //   state.loading = false
     //   state.sessions = action.payload
