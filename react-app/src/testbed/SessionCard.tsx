@@ -1,6 +1,7 @@
+
+
 import React from 'react';
 import { useAppDispatch, useAppSelector } from '../app/hooks';
-import { BackendRequest } from './BackendRequest';
 import { redirectUri, tokenEndpoint } from './config';
 import { attachToken, redirectSelector, selectSessionByStateStringSelector } from './slice'; 
 
@@ -70,6 +71,7 @@ export const SessionCard: React.FC<SessionCardProps> = ({
   const stateMatches = redirect?.state === sessionState
   const bg = stateMatches ? 'bg-yellow-500' : 'bg-white'
   const canGetToken = stateMatches && !accessToken;
+
 
   return (
     <div className={`p-4 mt-2 mb-2 rounded-md shadow-md ${bg}`}>

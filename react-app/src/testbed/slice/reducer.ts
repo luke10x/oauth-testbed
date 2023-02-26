@@ -15,6 +15,11 @@ export interface Session {
 export interface SessionsState {
   loading: boolean
   sessions: Array<Session>
+  // apiRequestInProgress: boolean
+  api: {
+    data: any
+    state: "ready" | "loading" | "completed"
+  }
   redirect?: {
     code: string
     state: string
@@ -23,7 +28,11 @@ export interface SessionsState {
 
 export const initialState: SessionsState = {
   loading: true,
-  sessions: []
+  sessions: [],
+  api: {
+    data: undefined,
+    state: "ready"
+  }
 };
 
 export const fetchSessionsThunk = createAsyncThunk(
@@ -89,22 +98,25 @@ const sessionsSlice = createSlice({
     },
     restoreSessions: (state, action: PayloadAction<Session[]>) => {
       state.sessions = action.payload
+    },
+    resetApiRequest: (state, _action) => {
+      state.api.data = undefined
+      state.api.state = "ready"
     }
   },
   extraReducers: (builder) => {
     builder.addCase(apiRequestThunk.pending, (state, action) => {
-      state.loading = true
-      state.sessions = []
+      state.api.state = "loading"
       return state
     })
-    // builder.addCase(fetchSessionsThunk.fulfilled, (state, action) => {
-    //   state.loading = false
-    //   state.sessions = action.payload
-    //   return state
-    // })
+    builder.addCase(apiRequestThunk.fulfilled, (state, action) => {
+      state.api.state = "completed"
+      return state
+    })
   },
 });
 
+export const resetApiRequest = sessionsSlice.actions.resetApiRequest
 export const addSession = sessionsSlice.actions.addSession
 export const restoreSessions = sessionsSlice.actions.restoreSessions
 export const attachToken = sessionsSlice.actions.attachToken
