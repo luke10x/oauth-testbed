@@ -3,10 +3,11 @@ import {
   configureStore,
   ThunkAction,
 } from '@reduxjs/toolkit'
-import { setupListeners } from '@reduxjs/toolkit/query'
-import { modeReducer } from '../mode/slice';
-import { sessionListener, sessionReducer } from '../testbed/slice';
 
+import { setupListeners } from '@reduxjs/toolkit/query'
+import { RootState as ModeRootState, modeReducer } from '../mode/slice';
+import { RootState as SessionsRootState, sessionListener, sessionReducer } from '../testbed/slice';
+export type RootState = ModeRootState & SessionsRootState
 export const store = configureStore({
   reducer: {
     // This is where we add reducers.
@@ -22,7 +23,6 @@ export const store = configureStore({
 setupListeners(store.dispatch)
 
 export type AppDispatch = typeof store.dispatch;
-export type RootState = ReturnType<typeof store.getState>;
 export type AppThunk<ReturnType = void> = ThunkAction<
    ReturnType,
    RootState,

@@ -14,6 +14,10 @@ export type ModeState = {
   prefersLight: boolean;
 };
 
+export interface RootState {
+  mode: ModeState
+}
+
 const initialState: ModeState = {
   effectiveValue: "light",
   selectedValue: "light",

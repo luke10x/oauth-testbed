@@ -1,5 +1,8 @@
 import { createAsyncThunk, createListenerMiddleware, createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { RootState } from "../../app/store";
+
+export interface RootState {
+  session: SessionsState
+}
 
 export interface SessionAuthentication {
   state: "editable" | "waitingForPkce" | "dipatched" | "completed"
@@ -78,15 +81,13 @@ interface ApiRequestThunkParams {
   accessToken?: string
 }
 
-
 export const apiRequestThunk = createAsyncThunk(
   'thunk/apiRequest',
   async ({endpoint, accessToken}: ApiRequestThunkParams, thunkApi) => {
     // pre-alloacte auto-increment ID
     const state = thunkApi.getState() as RootState
     const id = state.session.requests.length + 1
-    console.log("IDID", id)
-    
+
     // Starting request
     thunkApi.dispatch(createRequest({ id, endpoint, accessToken }))
 
