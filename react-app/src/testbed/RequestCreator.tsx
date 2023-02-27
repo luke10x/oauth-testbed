@@ -29,10 +29,16 @@ interface CardFormProps {
 }
 
 const CardForm: FC<CardFormProps> = ({ accessTokens, onConfigured }) => {
+
+  const endpoints = [
+    { title: "root", url: `${backendUrlBase}/` },
+    { title: "/secret", url: `${backendUrlBase}/secret` },
+  ]
   const [
     selectedEndpoint,
     setSelectedEndpoint,
-  ] = useState<string>("/")
+  ] = useState<string>(endpoints[0].url)
+
   const [
     selectedAccessToken,
     setSelectedAccessToken
@@ -60,8 +66,7 @@ const CardForm: FC<CardFormProps> = ({ accessTokens, onConfigured }) => {
               Endpoint
             </label>
             <select onChange={onSelectEndpoint} id="endpoint" name="endpoint" className="appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
-                <option key="1" value={`${backendUrlBase}/`}>root</option>
-                <option key="2" value={`${backendUrlBase}/secret`}>/secret</option>
+                {endpoints.map((e, key) => <option key={key} value={e.url}>{e.title}</option>)}
             </select>
           </div>
           <div className="mb-4">
