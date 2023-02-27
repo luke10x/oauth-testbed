@@ -18,7 +18,7 @@ const CreateApiRequestButton: React.FC<CreateApiRequestButtonProps> = ({ onClick
         <path fillRule="evenodd" d="M10.556 16.11c-.17.477-.774.888-1.256.888H4.22c-.483 0-1.086-.41-1.256-.888l-2.66-7.387c-.171-.477-.22-.932-.125-1.172.096-.24.463-.888 1.081-1.434C2.877 5.428 6.112 3 10 3s7.123 2.428 9.42 3.316c.618.545.985 1.194 1.082 1.434.095.24.047.695-.125 1.172l-2.66 7.387zm-5.534-1.22h5.528l2.293-6.357c.018-.05.032-.109.041-.178.01-.069.01-.16-.005-.262-.075-.37-.421-.736-1.055-1.124C11.378 7.812 9.758 7 8 7s-3.378.812-4.767 1.479c-.634.388-.98.754-1.055 1.124-.015.102-.015.193-.005.262.01.069.023.128.041.178l2.293 6.357z" clipRule="evenodd" />
         <path d="M10 13a1 1 0 100-2 1 1 0 000 2z" />
       </svg>
-      <span>Create API Request</span>
+      <span>Make API Request</span>
     </button>
   );
 };
@@ -76,7 +76,7 @@ const CardForm: FC<CardFormProps> = ({ accessTokens, onConfigured }) => {
             </select>
           </div>
           <button type="submit" className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">
-            Submit
+            Connect
           </button>
         </form>
       </div>

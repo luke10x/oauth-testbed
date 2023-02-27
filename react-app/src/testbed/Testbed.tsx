@@ -5,6 +5,7 @@ import { SessionCreator } from "./SessionCreator";
 import { SessionCard } from "./SessionCard";
 import CodeDetector from "./CodeDetector";
 import { RequestCreator } from "./RequestCreator";
+import { RequestList } from "./RequestList";
 
 interface TestbedProps {}
 const Testbed: FC<TestbedProps> = () => {
@@ -33,7 +34,7 @@ const Testbed: FC<TestbedProps> = () => {
       </div>
       <p>Web Requests:</p>
       <div className="flex flex-col ">
-        {/* <RequestList /> */}
+        <RequestList />
         <div className="flex justify-center">
           <RequestCreator />
         </div>
