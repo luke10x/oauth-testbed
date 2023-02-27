@@ -11,7 +11,7 @@ export const Spinner: FC<SpinnerProps> = () => {
           stroke="currentColor" fill="none" strokeWidth="5"></circle>
         <path className="opacity-25" 
           d="M25 10A15 15 0 0 1 25 40" 
-          stroke="currentColor" stroke-width="5" 
+          stroke="currentColor" strokeWidth="5" 
           strokeLinecap="round" fill="none"></path>
       </svg>
     </div>

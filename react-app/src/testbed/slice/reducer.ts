@@ -1,6 +1,5 @@
 import { createAsyncThunk, createListenerMiddleware, createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { RootState } from "../../app/store";
-import { restrictedBackendEndpoint } from "../config";
 
 export interface SessionAuthentication {
   state: "editable" | "waitingForPkce" | "dipatched" | "completed"
@@ -24,19 +23,28 @@ export interface SessionsState {
     code: string
     state: string
   }
+  requests: Request[]
 }
-
+interface Request {
+  id: any
+  endpoint: string
+  response?: {
+    httpStatus: number
+    body: string
+  }
+}
 export const initialState: SessionsState = {
   loading: true,
   sessions: [],
   api: {
     data: undefined,
     state: "ready"
-  }
+  },
+  requests: []
 };
 
 export const fetchSessionsThunk = createAsyncThunk(
-  `session/fetchSessions`, async (): Promise<Session[]> => {
+  `thunk/fetchSessions`, async (): Promise<Session[]> => {
     await new Promise((res) => setTimeout(() => res("p1"), 1000))
 
     const data = sessionStorage.getItem('my-sessions')
@@ -59,21 +67,38 @@ interface AttachTokenPayload {
   accessToken: string
 }
 
+interface CreateRequestPayload {
+  id: any,
+  endpoint: string
+  accessToken?: string
+}
+
 interface ApiRequestThunkParams {
   endpoint: string
   accessToken?: string
 }
+
+
 export const apiRequestThunk = createAsyncThunk(
-  'session/kukuraku',
-  async ({endpoint, accessToken}: ApiRequestThunkParams, _thunkApi) => {
+  'thunk/apiRequest',
+  async ({endpoint, accessToken}: ApiRequestThunkParams, thunkApi) => {
+    // pre-alloacte auto-increment ID
+    const state = thunkApi.getState() as RootState
+    const id = state.session.requests.length + 1
+    console.log("IDID", id)
+    
+    // Starting request
+    thunkApi.dispatch(createRequest({ id, endpoint, accessToken }))
+
     const headers: HeadersInit = accessToken
-    ? { 'Authorization': `Bearer ${accessToken}` }
-    : {}
-    console.log({headers})
+      ? { 'Authorization': `Bearer ${accessToken}` }
+      : {}
     const response = await fetch(endpoint, { headers })
-    const text = await response.text()
-    console.log ({response, text})
-    return text
+    const body = await response.text()
+    const httpStatus = response.status
+
+    // Ending request
+    return { id, httpStatus, body }
   }
 )
 
@@ -103,24 +128,36 @@ const sessionsSlice = createSlice({
       state.api.data = undefined
       state.api.state = "ready"
     },
-
     startCustomizingApiRequest: (state) => {
       state.api.data = undefined
       state.api.state = "customizing"
+    },
+    createRequest: (state, action: PayloadAction<CreateRequestPayload>) => {
+      const id = action.payload.id
+      state.requests.push({
+        id,
+        endpoint: action.payload.endpoint,
+      })
     }
   },
   extraReducers: (builder) => {
     builder.addCase(apiRequestThunk.pending, (state, action) => {
       state.api.state = "loading"
-      return state
     })
     builder.addCase(apiRequestThunk.fulfilled, (state, action) => {
       state.api.state = "completed"
-      return state
+      const id = action.payload.id
+
+      const index = state.requests.findIndex(r => r.id === id)
+      state.requests[index].response = {
+        httpStatus: action.payload.httpStatus,
+        body: action.payload.body
+      }
     })
   },
 });
 
+export const createRequest = sessionsSlice.actions.createRequest
 export const startCustomizingApiRequest = sessionsSlice.actions.startCustomizingApiRequest
 export const resetApiRequest = sessionsSlice.actions.resetApiRequest
 export const addSession = sessionsSlice.actions.addSession

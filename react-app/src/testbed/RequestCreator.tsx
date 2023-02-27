@@ -1,4 +1,4 @@
-import { FC, useEffect, useState } from "react"
+import { FC, useState } from "react"
 import { useAppDispatch, useAppSelector } from "../app/hooks";
 import { backendUrlBase } from "./config";
 import { allKnownTokensSelector, apiRequestThunk, resetApiRequest, startCustomizingApiRequest } from "./slice";
