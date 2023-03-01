@@ -3,6 +3,7 @@
 import React from 'react';
 import { useAppDispatch, useAppSelector } from '../app/hooks';
 import { redirectUri, tokenEndpoint } from './config';
+import { Identicon } from './Identicon';
 import { attachToken, redirectSelector, selectSessionByStateStringSelector } from './slice'; 
 
 interface FetchTokenButtonProps {
@@ -75,12 +76,17 @@ export const SessionCard: React.FC<SessionCardProps> = ({
 
   return (
     <div className={`p-4 mt-2 mb-2 rounded-md shadow-md ${bg}`}>
-      <div className="text-lg font-medium mb-2">Session Data</div>
+      <div className="text-lg font-medium mb-2">
+        {sessionState} <Identicon payload={sessionState} />
+     
+      </div>
       <div className="flex flex-col space-y-2">
+        
         <div className="flex justify-between">
-          <span className="text-gray-600">Session State:</span>
+          <span className="text-gray-600">Session Stateddd:</span>
           <span className="font-medium">{sessionState}</span>
         </div>
+
         <div className="flex justify-between">
           <span className="text-gray-600">Code Verifier:</span>
           <span className="font-medium">{codeVerifier}</span>

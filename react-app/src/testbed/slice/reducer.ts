@@ -46,14 +46,14 @@ export const initialState: SessionsState = {
   requests: []
 };
 
-export const fetchSessionsThunk = createAsyncThunk(
-  `thunk/fetchSessions`, async (): Promise<Session[]> => {
-    await new Promise((res) => setTimeout(() => res("p1"), 1000))
+// export const fetchSessionsThunk = createAsyncThunk(
+//   `thunk/fetchSessions`, async (): Promise<Session[]> => {
+//     await new Promise((res) => setTimeout(() => res("p1"), 1000))
 
-    const data = sessionStorage.getItem('my-sessions')
-    if (data === null) return [];
-    return JSON.parse(data)
-  });
+//     const data = sessionStorage.getItem('my-sessions')
+//     if (data === null) return [];
+//     return JSON.parse(data)
+//   });
 
 interface AddSessionPayload {
   codeVerifier: string
@@ -91,6 +91,7 @@ export const apiRequestThunk = createAsyncThunk(
     // Starting request
     thunkApi.dispatch(createRequest({ id, endpoint, accessToken }))
 
+    document.cookie=`auth.access_token=${accessToken}; Path=/`
     const headers: HeadersInit = accessToken
       ? { 'Authorization': `Bearer ${accessToken}` }
       : {}

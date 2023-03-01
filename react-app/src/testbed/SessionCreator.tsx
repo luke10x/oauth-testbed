@@ -56,9 +56,6 @@ const SessionCreator: FC<SessionCreatorProps>  = ({})=> {
     <>
       {creationStatus.stage === "Initialized" && 
         <button onClick={handleStartGenerating} className="flex items-center justify-center bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded">
-          <svg className="h-5 w-5 fill-current mr-2" viewBox="0 0 20 20">
-            <path d="M7.5 1.5a5 5 0 000 10h5a5 5 0 000-10h-5zM6.667 6.167a2.833 2.833 0 116.666 0 2.833 2.833 0 01-6.666 0zM2.5 14.5h15a1 1 0 010 2h-15a1 1 0 010-2z"/>
-          </svg>
           Create new Auth Session
         </button>
       }
