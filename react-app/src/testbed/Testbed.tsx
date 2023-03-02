@@ -6,6 +6,7 @@ import { SessionCard } from "./SessionCard";
 import CodeDetector from "./CodeDetector";
 import { RequestCreator } from "./RequestCreator";
 import { RequestList } from "./RequestList";
+import { Flow } from "./flows/Flow";
 
 interface TestbedProps {}
 const Testbed: FC<TestbedProps> = () => {
@@ -21,6 +22,7 @@ const Testbed: FC<TestbedProps> = () => {
 
   return (
     <>
+      <Flow />
       <h1>User Sessions</h1> 
       <div className="flex flex-col ">
         <CodeDetector />

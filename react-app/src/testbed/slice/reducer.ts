@@ -1,4 +1,5 @@
-import { createAsyncThunk, createListenerMiddleware, createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { AsyncThunk, createAsyncThunk, createListenerMiddleware, createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { generateChallengeAndVerifier, generateStateString } from "../lib/auth";
 
 export interface RootState {
   session: SessionsState
@@ -7,6 +8,20 @@ export interface RootState {
 export interface SessionAuthentication {
   state: "editable" | "waitingForPkce" | "dipatched" | "completed"
 }
+
+type AuthorizationCodeScopes = ["openid", "profile", ...string[]];
+
+export type FlowType = "AuthorizationCodePkceFlow"
+
+interface AuthorizationCodePkceFlow {
+  type: "AuthoricationCodePkceFlow"
+  stateString: string
+  codeVerifier: string
+  scopes: AuthorizationCodeScopes
+}
+
+export type Flow = | AuthorizationCodePkceFlow
+
 export interface Session {
   id: number;
   stateString: string
@@ -27,6 +42,7 @@ export interface SessionsState {
     state: string
   }
   requests: Request[]
+  flow?: Flow
 }
 interface Request {
   id: any
@@ -43,7 +59,8 @@ export const initialState: SessionsState = {
     data: undefined,
     state: "ready"
   },
-  requests: []
+  requests: [],
+  flow: undefined,
 };
 
 // export const fetchSessionsThunk = createAsyncThunk(
@@ -80,6 +97,22 @@ interface ApiRequestThunkParams {
   endpoint: string
   accessToken?: string
 }
+
+export const startAuthorizationCodePkceFlowThunk = createAsyncThunk(
+  'thunk/startFlow',
+  async () => {
+    const { codeChallenge, codeVerifier } = await generateChallengeAndVerifier()
+    const stateString = generateStateString()
+
+    return {
+      type: "AuthoricationCodePkceFlow" as "AuthoricationCodePkceFlow",
+      stateString,
+      codeVerifier,
+      codeChallenge,
+      scopes: ["openid", "profile"] as AuthorizationCodeScopes
+    }
+  }
+)
 
 export const apiRequestThunk = createAsyncThunk(
   'thunk/apiRequest',
@@ -143,6 +176,9 @@ const sessionsSlice = createSlice({
     }
   },
   extraReducers: (builder) => {
+    builder.addCase(startAuthorizationCodePkceFlowThunk.fulfilled, (state, action) => {
+      state.flow = action.payload
+    })
     builder.addCase(apiRequestThunk.pending, (state, action) => {
       state.api.state = "loading"
     })
