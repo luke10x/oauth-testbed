@@ -23,7 +23,6 @@ const PkceFlowStep1: FC<PkceFlowStep1Props> = () => {
 
   return (
     <Step number={1}>
-      {flow.phase}
       <p>
         This is an Authentication Code (with PKCE) flow.          
         I've generated a verifier and challenge 

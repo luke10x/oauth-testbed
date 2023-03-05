@@ -1,7 +1,7 @@
 import { createAsyncThunk, createListenerMiddleware, createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { authenticateEndpoint, tokenEndpoint } from "../config";
 import { generateChallengeAndVerifier, generateStateString } from "../lib/auth";
-import { buildPkceAuthParams, buildTokenParams } from "./functions";
+import { buildPkceAuthParams, buildTokenParams, hashCode } from "./functions";
 
 export interface RootState {
   session: SessionsState
@@ -35,16 +35,16 @@ export interface Session {
   accessToken?: string
 }
 
-interface TokenInfo {
+export interface TokenInfo {
   id: number
   accessToken: string
   flow: Flow
+  hash: string
 }
 
 export interface SessionsState {
   loading: boolean
   sessions: Array<Session>
-  // apiRequestInProgress: boolean
   api: {
     data: any
     state: "ready" | "customizing" | "loading" | "completed"
@@ -104,6 +104,10 @@ interface ApiRequestThunkParams {
   endpoint: string
   accessToken?: string
 }
+interface ExecuteRequestThunkParams {
+  endpoint: string
+  bearer: string  
+}
 
 type Phase = "in customization" | "in authorization" | "authorized" | "got token"
 
@@ -151,20 +155,18 @@ export const fetchTokenThunk = createAsyncThunk(
     return json.access_token
   }
 )
-
-export const apiRequestThunk = createAsyncThunk(
-  'thunk/apiRequest',
-  async ({endpoint, accessToken}: ApiRequestThunkParams, thunkApi) => {
+export const executeRequestThunk = createAsyncThunk(
+  'thunk/executeRequest',
+  async ({endpoint, bearer}: ExecuteRequestThunkParams, thunkApi) => {
     // pre-alloacte auto-increment ID
     const state = thunkApi.getState() as RootState
     const id = state.session.requests.length + 1
 
     // Starting request
-    thunkApi.dispatch(createRequest({ id, endpoint, accessToken }))
+    thunkApi.dispatch(createRequest({ id, endpoint, accessToken: bearer }))
 
-    document.cookie=`auth.access_token=${accessToken}; Path=/`
-    const headers: HeadersInit = accessToken
-      ? { 'Authorization': `Bearer ${accessToken}` }
+    const headers: HeadersInit = bearer !== ''
+      ? { 'Authorization': `Bearer ${bearer}` }
       : {}
     const response = await fetch(endpoint, { headers })
     const body = await response.text()
@@ -182,6 +184,9 @@ const sessionsSlice = createSlice({
     loadFlow: (state, action: PayloadAction<Flow>) => {
       state.flow = action.payload
       state.flow.phase = "authorized"
+    },    
+    loadTokens: (state, action: PayloadAction<Array<TokenInfo>>) => {
+      state.tokens = action.payload
     },
     resetFlow: (state, _action) => {
       state.flow = undefined
@@ -225,11 +230,7 @@ const sessionsSlice = createSlice({
     builder.addCase(startAuthorizationCodePkceFlowThunk.fulfilled, (state, action) => {
       state.flow = action.payload
     })
-    builder.addCase(apiRequestThunk.pending, (state, action) => {
-      state.api.state = "loading"
-    })
-    builder.addCase(apiRequestThunk.fulfilled, (state, action) => {
-      state.api.state = "completed"
+    builder.addCase(executeRequestThunk.fulfilled, (state, action) => {
       const id = action.payload.id
 
       const index = state.requests.findIndex(r => r.id === id)
@@ -238,6 +239,7 @@ const sessionsSlice = createSlice({
         body: action.payload.body
       }
     })
+
     builder.addCase(goToAuthThunk.pending, (state, action) => {
       state.flow!.phase = "in authorization"
     })
@@ -246,7 +248,8 @@ const sessionsSlice = createSlice({
       const tokenInfo: TokenInfo = {
         id,
         accessToken: action.payload,
-        flow: state.flow!
+        flow: state.flow!,
+        hash: hashCode(action.payload).toString(),
       }
       state.tokens.push(tokenInfo)
       state.flow!.phase = "got token"
@@ -263,6 +266,7 @@ export const restoreSessions = sessionsSlice.actions.restoreSessions
 export const attachToken = sessionsSlice.actions.attachToken
 export const addCodeFromRedirect = sessionsSlice.actions.addCodeFromRedirect
 export const loadFlow = sessionsSlice.actions.loadFlow
+export const loadTokens = sessionsSlice.actions.loadTokens
 export const resetFlow = sessionsSlice.actions.resetFlow
 
 export const sessionListener = createListenerMiddleware()

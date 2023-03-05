@@ -7,7 +7,7 @@ const RequestList: FC<RequestListProps> = () => {
 
   const requests = useAppSelector(state => state.session.requests) 
   return (
-    <table>
+    <table className="my-card w-full">
       {requests.map(req => <tr>
         <td>{req.id}</td>
         <td>

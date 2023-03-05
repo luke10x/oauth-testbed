@@ -1,5 +1,6 @@
 import { FC, useState } from "react";
 import { useAppDispatch, useAppSelector } from "../../app/hooks";
+import { getState } from "../../app/store";
 import { RedButton } from "../elements/RedButton";
 import { ResetFlowButton } from "../elements/ResetFlowButton";
 import { Step } from "../elements/Step";
@@ -15,6 +16,11 @@ const PkceFlowStep3: FC<PkceFlowStep1Props> = () => {
   const handleFetchToken = () => {
     setFetching(true)
     dispatch(fetchTokenThunk(flow))
+    .then(() => {
+      const state = getState()
+      const tokens = state.session.tokens
+      sessionStorage.setItem('session.tokens', JSON.stringify(tokens))
+    })
   }
   return (
     <Step number={3}>
