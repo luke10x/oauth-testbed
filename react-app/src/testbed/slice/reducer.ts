@@ -1,5 +1,7 @@
-import { AsyncThunk, createAsyncThunk, createListenerMiddleware, createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { createAsyncThunk, createListenerMiddleware, createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { authenticateEndpoint, tokenEndpoint } from "../config";
 import { generateChallengeAndVerifier, generateStateString } from "../lib/auth";
+import { buildPkceAuthParams, buildTokenParams } from "./functions";
 
 export interface RootState {
   session: SessionsState
@@ -13,11 +15,15 @@ type AuthorizationCodeScopes = ["openid", "profile", ...string[]];
 
 export type FlowType = "AuthorizationCodePkceFlow"
 
-interface AuthorizationCodePkceFlow {
+export interface AuthorizationCodePkceFlow {
   type: "AuthoricationCodePkceFlow"
   stateString: string
   codeVerifier: string
+  codeChallenge: string
   scopes: AuthorizationCodeScopes
+  phase: Phase
+  code?: string
+  tokenId?: number
 }
 
 export type Flow = | AuthorizationCodePkceFlow
@@ -27,6 +33,12 @@ export interface Session {
   stateString: string
   codeVerifier: string
   accessToken?: string
+}
+
+interface TokenInfo {
+  id: number
+  accessToken: string
+  flow: Flow
 }
 
 export interface SessionsState {
@@ -43,7 +55,9 @@ export interface SessionsState {
   }
   requests: Request[]
   flow?: Flow
+  tokens: Array<TokenInfo>
 }
+
 interface Request {
   id: any
   endpoint: string
@@ -52,6 +66,7 @@ interface Request {
     body: string
   }
 }
+
 export const initialState: SessionsState = {
   loading: true,
   sessions: [],
@@ -61,16 +76,8 @@ export const initialState: SessionsState = {
   },
   requests: [],
   flow: undefined,
+  tokens: []
 };
-
-// export const fetchSessionsThunk = createAsyncThunk(
-//   `thunk/fetchSessions`, async (): Promise<Session[]> => {
-//     await new Promise((res) => setTimeout(() => res("p1"), 1000))
-
-//     const data = sessionStorage.getItem('my-sessions')
-//     if (data === null) return [];
-//     return JSON.parse(data)
-//   });
 
 interface AddSessionPayload {
   codeVerifier: string
@@ -98,6 +105,8 @@ interface ApiRequestThunkParams {
   accessToken?: string
 }
 
+type Phase = "in customization" | "in authorization" | "authorized" | "got token"
+
 export const startAuthorizationCodePkceFlowThunk = createAsyncThunk(
   'thunk/startFlow',
   async () => {
@@ -109,8 +118,37 @@ export const startAuthorizationCodePkceFlowThunk = createAsyncThunk(
       stateString,
       codeVerifier,
       codeChallenge,
-      scopes: ["openid", "profile"] as AuthorizationCodeScopes
+      scopes: ["openid", "profile"] as AuthorizationCodeScopes,
+      phase: "in customization" as Phase
     }
+  }
+)
+
+export const goToAuthThunk = createAsyncThunk(
+  'thunk/goToAuth',
+  async (flow: AuthorizationCodePkceFlow , _thunkApi) => {
+    sessionStorage.setItem('session.flow', JSON.stringify(flow))
+
+    await new Promise(res => setTimeout(() => res(null), 1000))
+
+    const href  = authenticateEndpoint + '?' + buildPkceAuthParams(flow)
+    window.location.href = href
+  }
+)
+
+export const fetchTokenThunk = createAsyncThunk(
+  'thunk/fetchToken',
+  async (flow: AuthorizationCodePkceFlow, thunkApi) => {
+    const body = buildTokenParams(flow)
+    const response = await fetch(tokenEndpoint, { 
+      method: "POST",
+      body,
+      headers: {
+        'Content-Type': 'application/x-www-form-urlencoded',
+      }
+    })
+    const json = await response.json()
+    return json.access_token
   }
 )
 
@@ -141,12 +179,20 @@ const sessionsSlice = createSlice({
   name: "sessions",
   initialState,
   reducers: {
+    loadFlow: (state, action: PayloadAction<Flow>) => {
+      state.flow = action.payload
+      state.flow.phase = "authorized"
+    },
+    resetFlow: (state, _action) => {
+      state.flow = undefined
+    },
     addSession: (state, action: PayloadAction<AddSessionPayload>) => {
       const id = state.sessions.length + 1
       state.sessions.push({ id, ...action.payload})
     },
     addCodeFromRedirect: (state, action: PayloadAction<AddCodeFromRedirectPayload>) => {
       state.redirect = action.payload
+      state.flow!.code = action.payload.code
     },
     attachToken: (state, action: PayloadAction<AttachTokenPayload>) => {
       const len = state.sessions.length
@@ -192,6 +238,20 @@ const sessionsSlice = createSlice({
         body: action.payload.body
       }
     })
+    builder.addCase(goToAuthThunk.pending, (state, action) => {
+      state.flow!.phase = "in authorization"
+    })
+    builder.addCase(fetchTokenThunk.fulfilled, (state, action) => {
+      const id = state.tokens.length + 1
+      const tokenInfo: TokenInfo = {
+        id,
+        accessToken: action.payload,
+        flow: state.flow!
+      }
+      state.tokens.push(tokenInfo)
+      state.flow!.phase = "got token"
+      state.flow!.tokenId = id
+    })
   },
 });
 
@@ -202,6 +262,8 @@ export const addSession = sessionsSlice.actions.addSession
 export const restoreSessions = sessionsSlice.actions.restoreSessions
 export const attachToken = sessionsSlice.actions.attachToken
 export const addCodeFromRedirect = sessionsSlice.actions.addCodeFromRedirect
+export const loadFlow = sessionsSlice.actions.loadFlow
+export const resetFlow = sessionsSlice.actions.resetFlow
 
 export const sessionListener = createListenerMiddleware()
 
@@ -224,3 +286,5 @@ sessionListener.startListening({
   }
 })
 export const sessionReducer = sessionsSlice.reducer ;
+
+

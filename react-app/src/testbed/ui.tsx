@@ -17,7 +17,7 @@ const SelectBox: React.FC<SelectBoxProps> = ({ label, value, onChange, options }
         value={value}
         onChange={(event) => onChange(event.target.value)}
       >
-        {options.map(o => <option value={o.value}>{o.title}</option>)}
+        {options.map((o, k) => <option key={k} value={o.value}>{o.title}</option>)}
       </select>
   )
 }

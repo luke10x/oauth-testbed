@@ -30,21 +30,24 @@ const FlowSelector: FC<FlowSelectorProps> = () => {
 
   return (
     <form onSubmit={handleSubmit}
-        className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
+        className="my-card">
       <label htmlFor="select-flow"
           className="block text-gray-700 font-bold mb-2">
         Please select flow
       </label>
       <div className="flex gap-2">
-          <SelectBox value="AuthorizationCodePkce"
-            onChange={handleChange}
-            options={opts} />
+        <SelectBox value="AuthorizationCodePkce"
+          onChange={handleChange}
+          options={opts}
+        />
         <input
-            className="bg-blue-500 disabled:bg-gray-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
-            type="submit"
-            value="Start Flow"
-            disabled={submitted}
-            />
+          className="bg-blue-500 disabled:bg-gray-500 hover:bg-blue-700 
+            text-white font-bold py-2 px-4 rounded
+            focus:outline-none focus:shadow-outline"
+          type="submit"
+          value="Start Flow"
+          disabled={submitted}
+        />
       </div>
     </form>
   )
