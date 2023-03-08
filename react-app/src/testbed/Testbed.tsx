@@ -1,8 +1,8 @@
 import { FC } from "react";
-import { RequestList } from "./RequestList";
+import { RequestList } from "./request/RequestList";
 import { Flow } from "./flows/Flow";
 import { TokenList } from "./TokenList";
-import { ApiRequestForm } from "./ApiRequestForm";
+import { ApiRequestForm } from "./request/ApiRequestForm";
 
 interface TestbedProps {}
 const Testbed: FC<TestbedProps> = () => {
@@ -10,7 +10,7 @@ const Testbed: FC<TestbedProps> = () => {
   return (
     <>
       <Flow />
-      
+
       <h1>Tokens</h1> 
       <TokenList />
 

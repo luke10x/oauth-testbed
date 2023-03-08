@@ -1,6 +1,6 @@
 import { FC } from "react";
 import { useAppSelector } from "../../app/hooks";
-import CodeDetector from "../CodeDetector";
+import CodeDetector from "./CodeDetector";
 import { Step } from "../elements/Step";
 
 interface PkceFlowStep1Props {}

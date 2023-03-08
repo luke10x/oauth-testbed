@@ -1,7 +1,7 @@
 import { FC, useState } from "react";
-import { useAppDispatch } from "../app/hooks";
-import { backendUrlBase } from "./config";
-import { executeRequestThunk } from "./slice";
+import { useAppDispatch } from "../../app/hooks";
+import { backendUrlBase } from "../config";
+import { executeRequestThunk } from "../slice";
 
 const endpoints = [
   { title: "root", url: `${backendUrlBase}/` },

@@ -13,9 +13,18 @@ const Flow: FC<FlowProps> = ({}) => {
   useEffect(() => {
     if (flow === undefined) {
       const storedFlow = sessionStorage.getItem('session.flow')
+      let parsed = undefined
       if (storedFlow) {
-        dispatch(loadFlow(JSON.parse(storedFlow)))
-        flow = JSON.parse(storedFlow)
+        try {
+          parsed = JSON.parse(storedFlow)
+        } catch (e) {
+          console.error("Cannot parse stored flow", storedFlow)
+        }
+        if (typeof parsed === 'object') {
+
+          dispatch(loadFlow(parsed))
+          flow = parsed
+        }
       }
     }
   }, [])

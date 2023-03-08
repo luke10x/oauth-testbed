@@ -272,23 +272,16 @@ export const resetFlow = sessionsSlice.actions.resetFlow
 export const sessionListener = createListenerMiddleware()
 
 sessionListener.startListening({
-  actionCreator: addSession,
+  actionCreator: resetFlow,
   effect: async (_action, listenerApi) => {
-    const allState = listenerApi.getState() as RootState
-    const sessionState = allState.session.sessions;
-    sessionStorage.setItem('my-sessions', JSON.stringify(sessionState))
-    console.log('listener saved my-sessions')
+    // const allState = listenerApi.getState() as RootState
+    // const flow = allState.session.flow;
+    // sessionStorage.setItem('session.flow', JSON.stringify(flow))
+    sessionStorage.removeItem('sessionFlow')
+    console.log("FLOW RESET")
   }
 })
-sessionListener.startListening({
-  actionCreator: attachToken,
-  effect: async (_action, listenerApi) => {
-    const allState = listenerApi.getState() as RootState
-    const sessionState = allState.session.sessions;
-    sessionStorage.setItem('my-sessions', JSON.stringify(sessionState))
-    console.log('listener saved my-sessions')
-  }
-})
+
 export const sessionReducer = sessionsSlice.reducer ;
 
 

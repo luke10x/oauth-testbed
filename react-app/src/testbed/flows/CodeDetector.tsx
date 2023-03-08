@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
-import { useAppDispatch } from '../app/hooks';
-import { addCodeFromRedirect } from './slice';
+import { useAppDispatch } from '../../app/hooks';
+import { addCodeFromRedirect } from '../slice';
 
 interface CodeDetectorProps {}
 const CodeDetector: React.FC<CodeDetectorProps> = ({ }) => {

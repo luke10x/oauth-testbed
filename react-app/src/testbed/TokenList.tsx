@@ -1,6 +1,6 @@
 import { FC, useEffect } from "react"
 import { useAppDispatch, useAppSelector } from "../app/hooks"
-import { Identicon } from "./Identicon"
+import { Identicon } from "./elements/Identicon"
 import { loadTokens } from "./slice"
 
 interface TokenListProps {}

@@ -1,6 +1,6 @@
 import { FC } from "react";
-import { useAppDispatch, useAppSelector } from "../app/hooks";
-import { Spinner } from "./Spinner";
+import { useAppSelector } from "../../app/hooks";
+import { Spinner } from "../elements/Spinner";
 
 interface RequestListProps {}
 const RequestList: FC<RequestListProps> = () => {
@@ -8,7 +8,7 @@ const RequestList: FC<RequestListProps> = () => {
   const requests = useAppSelector(state => state.session.requests) 
   return (
     <table className="my-card w-full">
-      {requests.map(req => <tr>
+      {requests.map(req => <tr key={req.id}>
         <td>{req.id}</td>
         <td>
           {req.response === undefined && <Spinner />}
