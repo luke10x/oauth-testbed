@@ -133,7 +133,7 @@ export const goToAuthThunk = createAsyncThunk(
   async (flow: AuthorizationCodePkceFlow , _thunkApi) => {
     sessionStorage.setItem('session.flow', JSON.stringify(flow))
 
-    await new Promise(res => setTimeout(() => res(null), 1000))
+    await new Promise(res => setTimeout(() => res(null), 2000))
 
     const href  = authenticateEndpoint + '?' + buildPkceAuthParams(flow)
     window.location.href = href

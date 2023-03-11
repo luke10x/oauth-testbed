@@ -24,9 +24,7 @@ const PkceFlowStep1: FC<PkceFlowStep1Props> = () => {
   return (
     <Step number={1}>
       <p>
-        This is an Authentication Code (with PKCE) flow.          
-        I've generated a verifier and challenge 
-        to ensure the security of the authentication process.
+        Notice the verifier and the challenge 
       </p>
       <p> 
           Now you need to go to the Authorization Endpoint authenticate.

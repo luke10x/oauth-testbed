@@ -16,6 +16,10 @@ const PkceFlow: FC<PkceFlowProps> = ({}) => {
 
   return (
     <div className="my-card">
+      <p>
+        This is an Authentication Code (with PKCE) flow.                
+      </p>
+
       <PkceFlowStep1 />
       {showPhase2 && <PkceFlowStep2 />}
       {showPhase3 && <PkceFlowStep3 />}
