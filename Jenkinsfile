@@ -12,7 +12,9 @@ pipeline {
     
     stage('Deploy webapp') { 
       steps {
-          // 
+        dir("${env.WORKSPACE}/react-app"){
+          sh 'pwd; la -l; ../ci/deploy-react-app "param"'
+        }
       }
     }
   }
