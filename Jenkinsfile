@@ -5,7 +5,7 @@ pipeline {
       steps {
         sh "echo hello"
         dir("${env.WORKSPACE}/react-app"){
-          sh 'pwd; ls -las; ../ci/build-react-app "param"'
+          sh '../ci/build-react-app "param"'
         }
       }
     }
@@ -13,7 +13,7 @@ pipeline {
     stage('Deploy webapp') { 
       steps {
         dir("${env.WORKSPACE}/react-app"){
-          sh 'pwd; ls -las; ../ci/deploy-react-app "param"'
+          sh '../ci/deploy-react-app "param"'
         }
       }
     }

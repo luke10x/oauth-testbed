@@ -1,3 +1,22 @@
 #!/bin/bash
 
+set -o nounset -o errexit
+
 echo "this is a script to Deploy"
+
+env
+pwd
+
+echo "🚩 fdsd"
+
+# Set the source directory
+SOURCE_DIR="/path/to/source/directory"
+
+# # Check if the DESTINATION_DIR environment variable is set
+# if [ -z "${DESTINATION_DIR:-}" ]; then
+#   echo "Error: DESTINATION_DIR environment variable is not set"
+#   exit 1
+# fi
+
+# Use rsync to deploy files
+rsync -avz --delete "$SOURCE_DIR" "$DEPLOYMENT_DIR"
