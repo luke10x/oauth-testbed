@@ -1,7 +1,9 @@
 #!/bin/bash
 
-echo "this is a script to build"
+set -o nounset -o errexit
 
 npm build
+
+echo "💚 Build succesful on $(hostname):$(pwd)"
 
 ls -las

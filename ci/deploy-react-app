@@ -7,7 +7,7 @@ echo "this is a script to Deploy"
 env
 pwd
 
-echo "🚩 fdsd"
+echo "🚩 Getting ready"
 
 # Set the source directory
 SOURCE_DIR="/path/to/source/directory"
