@@ -2,13 +2,11 @@
 
 set -o nounset -o errexit
 
-docker run --rm -it \
+docker run --rm \
   -v "$(pwd):/app" \
   --workdir /app \
   node:latest \
   npm build
-
-# npm build
 
 echo "💚 Build succesful on $(hostname):$(pwd)"
 
