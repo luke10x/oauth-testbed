@@ -8,7 +8,7 @@ interface FlowProps {}
 
 const Flow: FC<FlowProps> = ({}) => {
   const dispatch = useAppDispatch()
-  let flow = useAppSelector(state => state.session.flow)
+  const flow = useAppSelector(state => state.session.flow)
 
   useEffect(() => {
     if (flow === undefined) {
@@ -23,7 +23,6 @@ const Flow: FC<FlowProps> = ({}) => {
         if (typeof parsed === 'object') {
 
           dispatch(loadFlow(parsed))
-          flow = parsed
         }
       }
     }

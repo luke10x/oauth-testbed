@@ -100,10 +100,6 @@ interface CreateRequestPayload {
   accessToken?: string
 }
 
-interface ApiRequestThunkParams {
-  endpoint: string
-  accessToken?: string
-}
 interface ExecuteRequestThunkParams {
   endpoint: string
   bearer: string  
@@ -202,7 +198,7 @@ const sessionsSlice = createSlice({
     attachToken: (state, action: PayloadAction<AttachTokenPayload>) => {
       const len = state.sessions.length
       for (let i = 0; i < len; i++) {
-        if (state.sessions[i].stateString == action.payload.sessionState) {
+        if (state.sessions[i].stateString === action.payload.sessionState) {
           state.sessions[i].accessToken = action.payload.accessToken  
         }
       }

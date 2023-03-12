@@ -1,20 +1,37 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useAppDispatch } from '../../app/hooks';
 import { addCodeFromRedirect } from '../slice';
 
-interface CodeDetectorProps {}
-const CodeDetector: React.FC<CodeDetectorProps> = ({ }) => {
+interface CodeDetectorProps {
+  onCodeMissing: () => void
+}
+const CodeDetector: React.FC<CodeDetectorProps> = ({ onCodeMissing }) => {
 
   const dispatch = useAppDispatch()
 
-  const code = new URLSearchParams(window.location.search).get('code');
-  const state = new URLSearchParams(window.location.search).get('state');
+  // They will be here for first time, but then will be removed from URL bar
+  const codeParam = new URLSearchParams(window.location.search).get('code')
+  const stateParam = new URLSearchParams(window.location.search).get('state')
+
+  // Therefore, they have to be persisted in the state for later access
+  const [ code, _setCode ] = useState<string|null>(codeParam)
+  const [ state, _setState ] = useState<string|null>(stateParam);
 
   useEffect(() => {
     if (code && state) {
       dispatch(addCodeFromRedirect({ code, state}))
+
+      // Get the current URL
+      const currentUrl = window.location.href;
+
+      // Remove the query parameters
+      const newUrl = currentUrl.split('?')[0];
+
+      // Update the URL without query parameters
+      window.history.replaceState({}, '', newUrl);
+    } else {
+      onCodeMissing()
     }
-    console.log("Effect on code and state")
   }, [ ])
 
   if (!code || !state) {

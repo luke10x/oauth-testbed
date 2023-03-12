@@ -5,7 +5,7 @@ import { PkceFlowStep2 } from "./PkceFlowStep2";
 import { PkceFlowStep3 } from "./PkceFlowStep3";
 
 interface PkceFlowProps {}
-const PkceFlow: FC<PkceFlowProps> = ({}) => {
+const PkceFlow: FC<PkceFlowProps> = () => {
   const flow = useAppSelector(state => state.session.flow)
 
   const showPhase2 = flow
@@ -13,6 +13,7 @@ const PkceFlow: FC<PkceFlowProps> = ({}) => {
   const showPhase3 = flow
     && flow.phase !== "in customization"
     && flow.phase !== "in authorization"
+    && flow.phase !== "authorized"
 
   return (
     <div className="my-card">
