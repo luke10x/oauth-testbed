@@ -6,7 +6,7 @@ docker run --rm \
   -v "$(pwd):/app" \
   --workdir /app \
   node:latest \
-  npm build
+  npm run build
 
 echo "💚 Build succesful on $(hostname):$(pwd)"
 
