@@ -10,13 +10,11 @@ pwd
 echo "🚩 Getting ready"
 
 # Set the source directory
-SOURCE_DIR="/path/to/source/directory"
-
-# # Check if the DESTINATION_DIR environment variable is set
-# if [ -z "${DESTINATION_DIR:-}" ]; then
-#   echo "Error: DESTINATION_DIR environment variable is not set"
-#   exit 1
-# fi
+SOURCE_DIR="./build"
 
 # Use rsync to deploy files
-rsync -avz --delete "$SOURCE_DIR" "$DEPLOYMENT_DIR"
+CMD=rsync -avz --delete -e "ssh -p ${SSH_PORT}" \
+"${SOURCE_DIR}" ${REMOTE_DIR}
+echo "🚨 Jenkins now will execute: $CMD"
+$CMD
+
