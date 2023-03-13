@@ -10,5 +10,5 @@ set -o nounset -o errexit
 
 echo "💚 Build succesful on $(hostname):$(pwd)"
 
-ls -las "$(pwd)/build/"
+# ls -las "$(pwd)/build/"
 ls -las "$(pwd)/src/"
