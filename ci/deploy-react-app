@@ -4,8 +4,6 @@ set -o nounset -o errexit
 
 # Yes, my CI provides this script 😎
 /scripts/deploy-artifact \
-  src oauth-testbed+react-app
-
-  # build oauth-testbed+react-app
+  build oauth-testbed+react-app
 
 echo "💚 CI script deployed artifact successfully"

@@ -2,13 +2,12 @@
 
 set -o nounset -o errexit
 
-# docker run --rm \
-#   -v "$(pwd):/app" \
-#   --workdir /app \
-#   node:latest \
-#   bash -c "npm ci && npm run build"
+docker run --rm \
+  -v "$(pwd):/app" \
+  --workdir /app \
+  node:latest \
+  bash -c "npm ci && npm run build"
 
 echo "💚 Build succesful on $(hostname):$(pwd)"
 
-# ls -las "$(pwd)/build/"
-ls -las "$(pwd)/src/"
+ls -las "$(pwd)/build/"
