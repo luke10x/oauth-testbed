@@ -10,4 +10,4 @@ docker run --rm \
 
 echo "💚 Build succesful on $(hostname):$(pwd)"
 
-tree -L 3 ./build/
+ls -las "$(pwd)/build/"
