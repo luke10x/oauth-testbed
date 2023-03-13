@@ -2,19 +2,8 @@
 
 set -o nounset -o errexit
 
-echo "this is a script to Deploy"
+# Yes, my CI provides this script 😎
+/scripts/deploy-artifact \
+  ./build oauth-testbed+react-app
 
-env
-pwd
-
-echo "🚩 Getting ready"
-
-# Set the source directory
-SOURCE_DIR="./build"
-
-# Use rsync to deploy files
-CMD=rsync -avz --delete -e "ssh -p ${SSH_PORT}" \
-"${SOURCE_DIR}" ${REMOTE_DIR}
-echo "🚨 Jenkins now will execute: $CMD"
-$CMD
-
+echo "💚 CI script deployed artifact successfully"
