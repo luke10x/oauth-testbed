@@ -23,7 +23,7 @@ image=${prefix}-${timestamp}-img
 container=${prefix}-${timestamp}-cont
 
 # Builds here (if fails then no image is here = nothing to clean up)
-docker build -t $image Dockerfile .
+docker build -t $image Dockerfile
 # unlikely to fail at all
 docker create --name ${container} ${image}
 
