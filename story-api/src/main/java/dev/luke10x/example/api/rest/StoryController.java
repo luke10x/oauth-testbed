@@ -19,6 +19,16 @@ public class StoryController {
 		return "Greetings from Spring Boot!";
 	}
 
+	
+	
+	@GetMapping("/public")
+	public String publicAction() {
+		System.out.println("vscodes !!!\n\n");
+
+
+		return "ctrl-alt-delete(dy) dddnot running now and EVER !!! \n\n!";
+	}
+
 	@GetMapping("/secret")
 	public String secret() {
 			System.out.println("secret hit");

@@ -1,6 +1,6 @@
 FROM gradle:8.0.0-jdk19-focal
 
-WORKDIR /opt/storyapi
+WORKDIR /opt/story-api
 
 # Copy the Gradle wrapper files and build configuration files to the container
 COPY gradlew .
@@ -17,7 +17,7 @@ RUN ./gradlew build --no-daemon
 
 # Copy the executable JAR file to the container
 RUN mkdir -p /app
-RUN cp /opt/storyapi/build/libs/story-api-0.0.1-SNAPSHOT.jar /app/app.jar
+RUN cp /opt/story-api/build/libs/story-api-0.0.1-SNAPSHOT.jar /app/app.jar
 
 # Set the entrypoint to run the executable JAR file
 ENTRYPOINT ["java", "-jar", "app.jar"]
