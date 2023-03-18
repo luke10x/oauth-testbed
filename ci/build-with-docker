@@ -1,0 +1,45 @@
+#!/bin/bash
+
+#
+# Builds container image and extracts specific artifact outside
+# Notice, it does not use volume mounts, and this is on purpose.
+# This way it encourages images to be self contained
+# including everything needed for the build
+#
+# usage: build-in-docker <image-preffix> <artifact-source> <artifact-destination>
+#
+
+set -o nounset -o errexit
+
+# takes input to this script
+prefix=$1
+src_path=$2
+dst_path=$3
+timestamp=$(date +%s)
+
+# combine image/container names
+base_container=${prefix}-container
+image=${prefix}-${timestamp}-img
+container=${prefix}-${timestamp}-cont
+
+# Builds here (if fails then no image is here = nothing to clean up)
+docker build -t $image Dockerfile .
+# unlikely to fail at all
+docker create --name ${container} ${image}
+
+# This can fail due to misconf, and needs cleanup
+if docker cp ${temp_container}:${src_path} ${dst_path}; then
+  echo "File copied successfully"
+else
+  echo "Error copying file"
+  exit_status=$?
+  docker rm ${container}
+  docker rmi ${image}
+  exit $exit_status
+fi
+
+docker rm ${container}
+docker rmi ${image}
+
+ls -las "$(pwd)/"
+ls -las "$(pwd)/${dst_path}"

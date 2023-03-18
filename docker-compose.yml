@@ -3,8 +3,8 @@ services:
   reactapp:
     image: node
     volumes:
-      - "./react-app:/mnt/reactapp"
-    working_dir: "/mnt/reactapp"
+      - "./react-app:/mnt/react-app"
+    working_dir: "/mnt/react-app"
     environment:
       PORT: '13000'
       HTTPS: 'true'
@@ -15,11 +15,13 @@ services:
       - |
         npm start
 
-  storyapi:
+  story-api:
     build:
       context: ./story-api
       dockerfile: Dockerfile
-    working_dir: /app
+    working_dir: /mnt/story-api
+    volumes:
+      - "./story-api:/mnt/story-api"
     ports:
       - "18080:8080"
     entrypoint: "/bin/bash -c"
@@ -27,8 +29,7 @@ services:
       - |
         pwd
         ls -las
-        java -jar app.jar
-        # ./gradlew runBoot --stacktrace
+        ./gradlew bootRun --stacktrace
 
   keycloak:
     image: quay.io/keycloak/keycloak:20.0.3
