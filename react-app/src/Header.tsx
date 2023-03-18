@@ -11,7 +11,7 @@ export default function Header() {
     <div className="text-black dark:text-white flex items-center justify-between pb-8">
       <a href="/" className="m-2 test-base"
             >
-        <img className="w-20" src={`/start-logo-${mode}.svg`} alt="logo" />&nbsp;
+        <img className="w-20" src={`/openmoji-monster-${mode}.svg`} alt="logo" />&nbsp;
       </a>
       <nav>
         <section className="MOBILE-MENU flex lg:hidden">
