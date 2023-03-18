@@ -29,7 +29,10 @@ docker build --tag ${image} --file Dockerfile .
 # rm -fr ${dst_path}
 
 # this can fail due to 
-if docker run --rm --name ${container} ${image}; then
+if docker run --rm --name ${container} \
+      --entrypoint='/bin/bash -c' \
+      ${image} tail -f /dev/null
+then
   echo "💚 Docker container started successfully"
 else
   echo "💔 Error starting Docker container"
