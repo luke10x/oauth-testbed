@@ -5,7 +5,7 @@ pipeline {
       steps {
         sh "echo Jenkins pipeline for backend build"
         dir("${env.WORKSPACE}/story-api"){
-          sh '../ci/build-in-docker build/libs/ artifact'
+          sh '../ci/build-in-docker story-api build/libs/ artifact'
           sh 'ls'
           sh 'ls -las artifact'
         }
