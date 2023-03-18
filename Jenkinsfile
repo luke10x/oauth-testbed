@@ -4,8 +4,8 @@ pipeline {
     stage('Build backend') { 
       steps {
         sh "echo Jenkins pipeline for backend build"
-        dir("${env.WORKSPACE}/story-api"){
-          sh '../ci/build-in-docker story-api build/libs/ artifact'
+        dir("${env.WORKSPACE}/story-api") {
+          sh '../ci/build-in-docker story-api /app ./from_docker'
           sh 'ls'
           sh 'ls -las artifact'
         }
@@ -14,8 +14,8 @@ pipeline {
     
     stage('Deploy backend jar') { 
       steps {
-        dir("${env.WORKSPACE}/build"){
-          sh '../ci/deploy-react-app "param"'
+        dir("${env.WORKSPACE}/story-api") {
+          sh '/scripts/deploy-artifact ./from_docker oauth-testbed+story-api'
         }
       }
     }

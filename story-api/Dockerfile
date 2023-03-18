@@ -13,7 +13,7 @@ COPY src src
 
 # Build the application using Gradle
 RUN chmod +x ./gradlew
-RUN ./gradlew build --no-daemon
+RUN ./gradlew bootJar --no-daemon
 
 # Copy the executable JAR file to the container
 RUN mkdir -p /app
