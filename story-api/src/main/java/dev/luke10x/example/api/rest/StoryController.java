@@ -23,7 +23,7 @@ public class StoryController {
 	
 	@GetMapping("/public")
 	public String publicAction() {
-		System.out.println("vscodes !!!\n\n");
+		System.out.println("vscodes !\n\n");
 
 
 		return "ctrl-alt-delete(dy) dddnot running now and EVER !!! \n\n!";
