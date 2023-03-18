@@ -7,7 +7,7 @@ pipeline {
         dir("${env.WORKSPACE}/story-api") {
           sh '../ci/build-in-docker story-api /app ./from_docker'
           sh 'ls'
-          sh 'ls -las artifact'
+          sh 'ls -las ./from_docker'
         }
       }
     }
