@@ -6,8 +6,6 @@ pipeline {
         sh "echo Jenkins pipeline for backend build"
         dir("${env.WORKSPACE}/story-api") {
           sh '../ci/build-in-docker story-api /app ./from_docker'
-          sh 'ls'
-          sh 'ls -las ./from_docker'
         }
       }
     }
@@ -19,7 +17,6 @@ pipeline {
         }
       }
     }
-    
     
     // stage('Build webapp') { 
     //   steps {
