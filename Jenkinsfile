@@ -5,7 +5,7 @@ pipeline {
       steps {
         sh "Jenkins pipeline for backend build"
         dir("${env.WORKSPACE}/story-api"){
-          sh '../ci/build-gradle-app build/libs/ artifact'
+          sh '../ci/build-in-docker build/libs/ artifact'
           sh 'ls'
           sh 'artifact'
         }
