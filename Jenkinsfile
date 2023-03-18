@@ -3,11 +3,11 @@ pipeline {
   stages {
     stage('Build backend') { 
       steps {
-        sh "Jenkins pipeline for backend build"
+        sh "echo Jenkins pipeline for backend build"
         dir("${env.WORKSPACE}/story-api"){
           sh '../ci/build-in-docker build/libs/ artifact'
           sh 'ls'
-          sh 'artifact'
+          sh 'ls -las artifact'
         }
       }
     }
