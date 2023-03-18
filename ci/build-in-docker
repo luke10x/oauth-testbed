@@ -28,7 +28,7 @@ docker build --tag ${image} --file Dockerfile .
 docker create --name ${container} ${image}
 
 # This can fail due to misconf, and needs cleanup
-if docker cp ${temp_container}:${src_path} ${dst_path}; then
+if docker cp ${container}:${src_path} ${dst_path}; then
   echo "File copied successfully"
 else
   echo "Error copying file"
