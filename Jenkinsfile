@@ -33,8 +33,6 @@ pipeline {
             dir("${env.WORKSPACE}/react-app"){
               sh '/scripts/deploy-artifact ./temp oauth-testbed+react-app'
             }
-          }
-          steps {
             dir("${env.WORKSPACE}/react-app"){
               sh '/scripts/sync-to-www oauth-testbed+react-app oauth-testbed.luke10x.com'
             }
