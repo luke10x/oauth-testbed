@@ -30,8 +30,8 @@ docker build --tag ${image} --file Dockerfile .
 
 # this can fail due to 
 if docker run --rm --name ${container} \
-      --entrypoint=/bin/bash \
-      ${image} /usr/bin/tail -f /dev/null
+      --entrypoint=/usr/bin/tail \
+      ${image} -f /dev/null
 then
   echo "💚 Docker container started successfully"
 else
