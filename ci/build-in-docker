@@ -12,9 +12,10 @@
 set -o nounset -o errexit
 
 # takes input to this script
-prefix=$1
-src_path=$2
-dst_path=$3
+$PWD=$(pwd)
+prefix=$(basename "$pwd")-prfx
+src_path=$1
+dst_path=$2
 timestamp=$(date +%s)
 
 # combine image/container names
@@ -25,7 +26,6 @@ container=${prefix}-${timestamp}-cont
 # Builds here (if fails then no image is here = nothing to clean up)
 docker build --tag ${image} --file Dockerfile .
 
-# rm -fr ${dst_path}
 rm -fr ${dst_path}
 
 # unlikely to fail so no error handling needed 
