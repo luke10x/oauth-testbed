@@ -34,8 +34,6 @@ pipeline {
               sh '/scripts/deploy-artifact ./temp oauth-testbed+react-app'
             }
           }
-        }
-        stage('Sync to WWW') { 
           steps {
             dir("${env.WORKSPACE}/react-app"){
               sh '/scripts/sync-to-www oauth-testbed+react-app oauth-testbed.luke10x.com'
