@@ -29,7 +29,7 @@ docker build --tag ${image} --file Dockerfile .
 # rm -fr ${dst_path}
 
 # this can fail due to 
-if docker run --rm --name ${container} \
+if docker run --rm --detach --name ${container} \
       --entrypoint=/usr/bin/tail \
       ${image} -f /dev/null
 then
