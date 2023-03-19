@@ -15,7 +15,7 @@ function FirstPage() {
     <div className="h-full bg-my-solid p-2">
       <Header />
       <h1 className="text-3xl mb-4 text-black dark:text-white font-bold underline">
-        Open Authentication Testbed Monster
+        Open Authentication Testbed Test
       </h1>
       <Testbed />
       <h3 className="text-slate-900 text-black dark:text-white mt-5 text-base font-medium tracking-tight">Writes Upside-Down</h3>
