@@ -12,8 +12,8 @@
 set -o nounset -o errexit
 
 # takes input to this script
-$PWD=$(pwd)
-prefix=$(basename "$pwd")-prfx
+PWD=$(pwd)
+prefix=$(basename "$PWD")-prfx
 src_path=$1
 dst_path=$2
 timestamp=$(date +%s)
