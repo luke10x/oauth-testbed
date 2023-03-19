@@ -23,10 +23,8 @@ public class StoryController {
 	
 	@GetMapping("/public")
 	public String publicAction() {
-		System.out.println("vscodes !\n\n");
-
-
-		return "ctrl-alt-delete(dy) dddnot running now and EVER !!! \n\n!";
+		System.out.println("latest!");
+		return "ctrl-alt-delete(dy) the latest and the greatest !!! \n\n!";
 	}
 
 	@GetMapping("/secret")

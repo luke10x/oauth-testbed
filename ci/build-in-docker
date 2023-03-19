@@ -28,20 +28,8 @@ docker build --tag ${image} --file Dockerfile .
 # rm -fr ${dst_path}
 rm -fr ${dst_path}
 
-# this can fail due to 
-if docker run --rm --detach --name ${container} \
-      --entrypoint=/usr/bin/tail \
-      ${image} -f /dev/null
-then
-  echo "💚 Docker container started successfully"
-else
-  echo "💔 Error starting Docker container"
-  exit_status=$?
-  docker stop ${container} || true
-  docker rm ${container} || true
-  docker rmi ${image}
-  exit $exit_status
-fi
+# unlikely to fail so no error handling needed 
+docker create --name ${container} ${image}
 
 # This can fail due to misconf, and needs cleanup
 if docker cp ${container}:${src_path} ${dst_path}; then
