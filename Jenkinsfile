@@ -1,7 +1,7 @@
 pipeline {
   agent any 
   stages {
-    stage('Build') {
+    stage('Build:') {
       parallel {
         stage('Build BFF jar') {
           steps {
@@ -19,7 +19,7 @@ pipeline {
         }
       }
     }
-    stage('Deploy') {
+    stage('Deploy:') {
       parallel {
         stage('Deploy BFF jar') {
           steps {
@@ -32,6 +32,13 @@ pipeline {
           steps {
             dir("${env.WORKSPACE}/react-app"){
               sh '/scripts/deploy-artifact ./temp oauth-testbed+react-app'
+            }
+          }
+        }
+        stage('Sync to WWW') { 
+          steps {
+            dir("${env.WORKSPACE}/react-app"){
+              sh '/scripts/sync-to-www oauth-testbed+react-app oauth-testbed.luke10x.com'
             }
           }
         }
