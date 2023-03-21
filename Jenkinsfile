@@ -13,7 +13,7 @@ pipeline {
         stage('Build WepApp') {
           steps {
             dir("${env.WORKSPACE}/react-app"){
-              sh '../ci/build-in-docker /workdir/build ./temp'
+              sh '../ci/build-in-docker /workdir/dist ./temp'
             }
           }
         }
