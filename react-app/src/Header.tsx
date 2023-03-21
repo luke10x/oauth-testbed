@@ -1,4 +1,4 @@
-import { useState } from "react";
+import React, { useState } from "react";
 import { useAppSelector } from "./app/hooks";
 import Mode from "./mode/mode";
 import { modeSelector } from "./mode/slice";

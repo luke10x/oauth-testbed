@@ -1,4 +1,4 @@
-import { FC } from "react";
+import React, { FC } from "react";
 import { useAppSelector } from "../../app/hooks";
 import { ResetFlowButton } from "../elements/ResetFlowButton";
 import { Step } from "../elements/Step";

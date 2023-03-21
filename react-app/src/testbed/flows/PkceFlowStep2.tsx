@@ -1,4 +1,4 @@
-import { FC, useState } from "react";
+import React, { FC, useState } from "react";
 import { useAppDispatch, useAppSelector } from "../../app/hooks";
 import CodeDetector from "./CodeDetector";
 import { Step } from "../elements/Step";

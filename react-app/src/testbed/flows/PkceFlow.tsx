@@ -1,4 +1,4 @@
-import { FC } from "react";
+import React, { FC } from "react";
 import { useAppSelector } from "../../app/hooks";
 import { PkceFlowStep1 } from "./PkceFlowStep1";
 import { PkceFlowStep2 } from "./PkceFlowStep2";

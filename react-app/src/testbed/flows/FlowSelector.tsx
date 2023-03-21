@@ -1,4 +1,4 @@
-import { FC, useState } from "react"
+import React,{ FC, useState } from "react"
 import { useAppDispatch } from "../../app/hooks"
 import { FlowType, startAuthorizationCodePkceFlowThunk } from "../slice"
 import { SelectBox } from "../ui"

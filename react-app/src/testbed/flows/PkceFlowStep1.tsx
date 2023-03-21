@@ -1,4 +1,4 @@
-import { FC, useState } from "react";
+import React, { FC, useState } from "react";
 import { useAppDispatch, useAppSelector } from "../../app/hooks";
 import { RedButton } from "../elements/RedButton";
 import { ResetFlowButton } from "../elements/ResetFlowButton";

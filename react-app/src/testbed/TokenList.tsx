@@ -1,4 +1,4 @@
-import { FC, useEffect } from "react"
+import React, { FC, useEffect } from "react"
 import { useAppDispatch, useAppSelector } from "../app/hooks"
 import { Identicon } from "./elements/Identicon"
 import { loadTokens } from "./slice"

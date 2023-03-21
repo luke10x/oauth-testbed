@@ -1,6 +1,6 @@
 version: "3.7"
 services:
-  reactapp:
+  react-app:
     image: node
     volumes:
       - "./react-app:/mnt/react-app"
@@ -13,6 +13,7 @@ services:
     entrypoint: "/bin/bash -c"
     command:
       - |
+        echo Starting Web app
         npm start
 
   story-api:
