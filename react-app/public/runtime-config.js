@@ -5,6 +5,7 @@ const redirectUri = "http://localhost:13000"
 const tokenEndpoint = `${OIDC_AUTH}/protocol/openid-connect/token`;
 const restrictedBackendEndpoint = 'http://localhost:18080/secret'
 const backendUrlBase = 'http://localhost:18080'
+const oidcClientId = 'reactclient'
 
 window.__runtimeEnvironmentConfig = {
   authenticateEndpoint,
@@ -12,4 +13,5 @@ window.__runtimeEnvironmentConfig = {
   tokenEndpoint,
   restrictedBackendEndpoint,
   backendUrlBase,
+  oidcClientId
 }

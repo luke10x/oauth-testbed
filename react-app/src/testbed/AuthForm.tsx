@@ -1,7 +1,7 @@
 import React, { FC, useState } from "react";
 
 import config from "./config";
-const {authenticateEndpoint, redirectUri} = config
+const {authenticateEndpoint, redirectUri, oidcClientId} = config
 
 interface CheckableScopeProps {
   name: string
@@ -67,7 +67,7 @@ const AuthForm: FC<AuthFormProps> = ({ stateString, codeChallenge, onPreSubmit }
         <input type="hidden" name="response_type"
           value="code" />
         <input type="hidden" name="client_id"
-          value="reactclient" />
+          value={oidcClientId} />
         <input type="hidden" name="redirect_uri"
           value={redirectUri} />
         <input type="hidden" name="scope"

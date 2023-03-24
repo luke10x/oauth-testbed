@@ -4,6 +4,7 @@ interface RuntimeConfig {
   tokenEndpoint: string
   restrictedBackendEndpoint: string
   backendUrlBase: string
+  oidcClientId: string
 }
 
 interface RuntimeConfigContainer {
