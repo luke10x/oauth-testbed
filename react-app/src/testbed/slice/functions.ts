@@ -1,6 +1,7 @@
-import { redirectUri } from "../config"
 import { AuthorizationCodePkceFlow } from "./reducer"
 
+import config from "../config";
+const { redirectUri } = config
  
 const buildPkceAuthParams = (flow: AuthorizationCodePkceFlow) => {
 

@@ -1,8 +1,10 @@
 import React from 'react'
 import { FC, useState } from "react";
 import { useAppDispatch } from "../../app/hooks";
-import { backendUrlBase } from "../config";
 import { executeRequestThunk } from "../slice";
+
+import config from "../config";
+const { backendUrlBase } = config
 
 const endpoints = [
   { title: "root", url: `${backendUrlBase}/` },

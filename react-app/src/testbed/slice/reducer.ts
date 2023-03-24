@@ -1,7 +1,9 @@
 import { createAsyncThunk, createListenerMiddleware, createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { authenticateEndpoint, tokenEndpoint } from "../config";
 import { generateChallengeAndVerifier, generateStateString } from "../lib/auth";
 import { buildPkceAuthParams, buildTokenParams, hashCode } from "./functions";
+
+import config from "../config";
+const {authenticateEndpoint, tokenEndpoint} = config
 
 export interface RootState {
   session: SessionsState

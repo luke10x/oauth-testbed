@@ -1,5 +1,7 @@
 import React, { FC, useState } from "react";
-import { authenticateEndpoint, redirectUri } from "./config"
+
+import config from "./config";
+const {authenticateEndpoint, redirectUri} = config
 
 interface CheckableScopeProps {
   name: string
