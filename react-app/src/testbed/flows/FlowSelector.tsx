@@ -1,5 +1,7 @@
 import React,{ FC, useState } from "react"
 import { useAppDispatch } from "../../app/hooks"
+import { BlueSubmit } from "../elements/BlueSubmit"
+import { RedButton } from "../elements/RedButton"
 import { FlowType, startAuthorizationCodePkceFlowThunk } from "../slice"
 import { SelectBox } from "../ui"
 
@@ -40,14 +42,9 @@ const FlowSelector: FC<FlowSelectorProps> = () => {
           onChange={handleChange}
           options={opts}
         />
-        <input
-          className="bg-blue-500 disabled:bg-gray-500 hover:bg-blue-700 
-            text-white font-bold py-2 px-4 rounded
-            focus:outline-none focus:shadow-outline"
-          type="submit"
-          value="Start Flow"
+        <BlueSubmit
           disabled={submitted}
-        />
+        >Start Flow</BlueSubmit>
       </div>
     </form>
   )
