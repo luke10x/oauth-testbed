@@ -1,15 +1,15 @@
 import { AuthorizationCodePkceFlow } from "./reducer"
 
-import config from "../config";
-const { redirectUri, oidcClientId } = config
+import config, { AuthProviderDetails } from "../config";
+const { authProviders } = config
  
-const buildPkceAuthParams = (flow: AuthorizationCodePkceFlow) => {
+const buildPkceAuthParams = (flow: AuthorizationCodePkceFlow, authProvidersDetails: AuthProviderDetails) => {
 
   const body = new URLSearchParams()
 
   body.set('response_type', 'code')
-  body.set('client_id', oidcClientId)
-  body.set('redirect_uri', redirectUri)
+  body.set('client_id', authProvidersDetails.oidcClientId)
+  body.set('redirect_uri', authProvidersDetails.redirectUri)
   body.set('scope', flow.scopes.join(' '))
   body.set('state', flow.stateString)
   body.set('code_challenge', flow.codeChallenge)
@@ -18,14 +18,17 @@ const buildPkceAuthParams = (flow: AuthorizationCodePkceFlow) => {
   return body.toString()
 }
 
-const buildTokenParams = (flow: AuthorizationCodePkceFlow) => {
+const buildTokenParams = (flow: AuthorizationCodePkceFlow, authProvidersDetails: AuthProviderDetails) => {
   const body = new URLSearchParams()
 
-  body.set('grant_type', 'authorization_code');
-  body.set('client_id', oidcClientId);
-  body.set('code_verifier', flow.codeVerifier);
-  body.set('code', flow.code!);
-  body.set('redirect_uri', redirectUri);
+  body.set('grant_type', 'authorization_code')
+  body.set('client_id', authProvidersDetails.oidcClientId)
+  body.set('code_verifier', flow.codeVerifier)
+  body.set('code', flow.code!)
+  body.set('redirect_uri', authProvidersDetails.redirectUri)
+  if (authProvidersDetails.audience !== undefined) {
+    body.set('audience', authProvidersDetails.audience)
+  }
 
   return body.toString()
 }

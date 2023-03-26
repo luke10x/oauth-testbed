@@ -1,7 +1,8 @@
 import React, { FC, useState } from "react";
+import { useAppSelector } from "../app/hooks";
 
 import config from "./config";
-const {authenticateEndpoint, redirectUri, oidcClientId} = config
+const { authProviders } = config
 
 interface CheckableScopeProps {
   name: string
@@ -52,6 +53,9 @@ const AuthForm: FC<AuthFormProps> = ({ stateString, codeChallenge, onPreSubmit }
     return true
   };
 
+  const authProvider = useAppSelector(state => 
+    state.session.authProviders[state.session.selectedAuthProvider])
+
   return (
     <div className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
       <h3 className="text-2xl font-bold mb-4">Create a new session</h3>
@@ -61,15 +65,15 @@ const AuthForm: FC<AuthFormProps> = ({ stateString, codeChallenge, onPreSubmit }
       <CheckableScope name="profile" value={profile} onChange={setProfile} />
       <CheckableScope name="messages" value={messages} onChange={setMessages} />
 
-      <form method="GET" action={authenticateEndpoint} onSubmit={handleAuthenticationSubmit}>
-        <p>Authenticate request to GET {authenticateEndpoint} with the following parameters</p>
+      <form method="GET" action={authProvider.authenticateEndpoint} onSubmit={handleAuthenticationSubmit}>
+        <p>Authenticate request to GET {authProvider.authenticateEndpoint} with the following parameters</p>
   
         <input type="hidden" name="response_type"
           value="code" />
         <input type="hidden" name="client_id"
-          value={oidcClientId} />
+          value={authProvider.oidcClientId} />
         <input type="hidden" name="redirect_uri"
-          value={redirectUri} />
+          value={authProvider.redirectUri} />
         <input type="hidden" name="scope"
           value={selectedScopes} />
         <input type="hidden" name="state"

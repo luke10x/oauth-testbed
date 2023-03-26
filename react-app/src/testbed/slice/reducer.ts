@@ -2,8 +2,8 @@ import { createAsyncThunk, createListenerMiddleware, createSlice, PayloadAction 
 import { generateChallengeAndVerifier, generateStateString } from "../lib/auth";
 import { buildPkceAuthParams, buildTokenParams, hashCode } from "./functions";
 
-import config from "../config";
-const {authenticateEndpoint, tokenEndpoint} = config
+import config, { AuthProviderDetails } from "../config";
+const { authProviders } = config
 
 export interface RootState {
   session: SessionsState
@@ -58,6 +58,8 @@ export interface SessionsState {
   requests: Request[]
   flow?: Flow
   tokens: Array<TokenInfo>
+  authProviders: Array<AuthProviderDetails>
+  selectedAuthProvider: number
 }
 
 interface Request {
@@ -78,7 +80,9 @@ export const initialState: SessionsState = {
   },
   requests: [],
   flow: undefined,
-  tokens: []
+  tokens: [],
+  authProviders: authProviders,
+  selectedAuthProvider: 0,
 };
 
 interface AddSessionPayload {
@@ -128,12 +132,16 @@ export const startAuthorizationCodePkceFlowThunk = createAsyncThunk(
 
 export const goToAuthThunk = createAsyncThunk(
   'thunk/goToAuth',
-  async (flow: AuthorizationCodePkceFlow , _thunkApi) => {
+  async (flow: AuthorizationCodePkceFlow , thunkApi) => {
     sessionStorage.setItem('session.flow', JSON.stringify(flow))
 
     await new Promise(res => setTimeout(() => res(null), 2000))
 
-    const href  = authenticateEndpoint + '?' + buildPkceAuthParams(flow)
+    const state: RootState = thunkApi.getState() as RootState
+    console.log("goToAuthThunk State is:- " , state)
+    const authenticateEndpoint = state.session.authProviders[state.session.selectedAuthProvider].authenticateEndpoint
+
+    const href  =  authenticateEndpoint + '?' + buildPkceAuthParams(flow, state.session.authProviders[state.session.selectedAuthProvider])
     window.location.href = href
   }
 )
@@ -141,7 +149,13 @@ export const goToAuthThunk = createAsyncThunk(
 export const fetchTokenThunk = createAsyncThunk(
   'thunk/fetchToken',
   async (flow: AuthorizationCodePkceFlow, thunkApi) => {
-    const body = buildTokenParams(flow)
+
+    const state: RootState = thunkApi.getState() as RootState
+    console.log("goToAuthThunk State :+ ", {state})
+    const tokenEndpoint = state.session.authProviders[state.session.selectedAuthProvider].tokenEndpoint
+
+    const body = buildTokenParams(flow, state.session.authProviders[state.session.selectedAuthProvider])
+
     const response = await fetch(tokenEndpoint, { 
       method: "POST",
       body,

@@ -4,7 +4,6 @@ import { useAppDispatch } from "../../app/hooks";
 import { executeRequestThunk } from "../slice";
 
 import config from "../config";
-import { RedButton } from '../elements/RedButton';
 import { BlueSubmit } from '../elements/BlueSubmit';
 const { backendUrlBase } = config
 

@@ -19,7 +19,9 @@ const PkceFlowStep1: FC<PkceFlowStep1Props> = () => {
     dispatch(goToAuthThunk(flow))
   }
 
-  const url = buildPkceAuthParams(flow)
+  const authProvider = useAppSelector(state => 
+    state.session.authProviders[state.session.selectedAuthProvider])
+  const url = buildPkceAuthParams(flow, authProvider)
 
   return (
     <Step number={1}>
