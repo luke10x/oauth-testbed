@@ -5,12 +5,15 @@ import { RedButton } from "../elements/RedButton"
 import { FlowType, startAuthorizationCodePkceFlowThunk } from "../slice"
 import { SelectBox } from "../ui"
 
-const opts = [
-  { 
+import config from '../config'
+
+
+const opts = config.authProviders.map((provider) => {
+  return {
     value: "AuthorizationCodePkce",
-    title: "KC OIDC Authorization Code (with PKCE)",
-  },
-]
+    title: provider.name,
+  }
+})
 
 interface FlowSelectorProps {}
 const FlowSelector: FC<FlowSelectorProps> = () => {
