@@ -7,17 +7,17 @@ const buildPkceAuthParams = (flow: AuthorizationCodePkceFlow, authProvidersDetai
 
   const body = new URLSearchParams()
 
-  // body.set('response_type', 'code') // in Auth0 just "code" will give opaque
-  body.set('response_type', 'code token id_token') // in Auth0 just "code will give"
-  // body.set('response_type', 'token id_token') // in Auth0 just "code will give"
+  body.set('response_type', 'code')
   body.set('client_id', authProvidersDetails.oidcClientId)
   body.set('redirect_uri', authProvidersDetails.redirectUri)
-  body.set('scope', flow.scopes.join(' '))
+
+  // body.set('scope', flow.scopes.join(' '))
+  body.set('scope', 'openid profile email api offline_access')
+  
   body.set('state', flow.stateString)
   body.set('code_challenge', flow.codeChallenge)
   body.set('code_challenge_method', 'S256')
   body.set('nonce', flow.codeChallenge.substring(0,5))
-
 
   return body.toString()
 }
