@@ -16,7 +16,7 @@ function FirstPage() {
     <div className="h-full bg-my-solid p-2">
       <Header />
       <h1 className="text-3xl mb-4 text-black dark:text-white font-bold underline">
-        Open Authentication Testbed 💜👾
+        Open Authentication Testbed 💜👾💚
       </h1>
       <Testbed />
     </div>

@@ -9,6 +9,7 @@ const buildPkceAuthParams = (flow: AuthorizationCodePkceFlow, authProvidersDetai
 
   // body.set('response_type', 'code') // in Auth0 just "code" will give opaque
   body.set('response_type', 'code token id_token') // in Auth0 just "code will give"
+  body.set('response_type', 'token id_token') // in Auth0 just "code will give"
   body.set('client_id', authProvidersDetails.oidcClientId)
   body.set('redirect_uri', authProvidersDetails.redirectUri)
   body.set('scope', flow.scopes.join(' '))
