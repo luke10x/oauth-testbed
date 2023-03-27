@@ -16,6 +16,8 @@ const buildPkceAuthParams = (flow: AuthorizationCodePkceFlow, authProvidersDetai
   body.set('state', flow.stateString)
   body.set('code_challenge', flow.codeChallenge)
   body.set('code_challenge_method', 'S256')
+  body.set('nonce', flow.codeChallenge.substring(0,5))
+
 
   return body.toString()
 }
