@@ -35,7 +35,7 @@ const TokenList: FC<TokenListProps> = () => {
         <a href={`https://jwt.io/#debugger-io?token=${t.accessToken}`}>
           <img 
             className="border border-gray-300 border-2 rounded-full"
-          src="http://jwt.io/img/badge.svg" alt="View on JWT.io"/>
+          src="/view-on-jwt_io.svg" alt="View on JWT.io"/>
         </a>
       </div>
     </div>))}
