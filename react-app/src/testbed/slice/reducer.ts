@@ -133,13 +133,17 @@ export const startAuthorizationCodePkceFlowThunk = createAsyncThunk(
 export const goToAuthThunk = createAsyncThunk(
   'thunk/goToAuth',
   async (flow: AuthorizationCodePkceFlow , thunkApi) => {
-    sessionStorage.setItem('session.flow', JSON.stringify(flow))
-
-    await new Promise(res => setTimeout(() => res(null), 2000))
 
     const state: RootState = thunkApi.getState() as RootState
     console.log("goToAuthThunk State is:- " , state)
-    const authenticateEndpoint = state.session.authProviders[state.session.selectedAuthProvider].authenticateEndpoint
+    const selectedAuthProvider = state.session.selectedAuthProvider
+
+    sessionStorage.setItem('session.flow', JSON.stringify(flow))
+    sessionStorage.setItem('session.selectedAuthProvider', String(selectedAuthProvider))
+
+    await new Promise(res => setTimeout(() => res(null), 2000))
+
+    const authenticateEndpoint = state.session.authProviders[].authenticateEndpoint
 
     const href  =  authenticateEndpoint + '?' + buildPkceAuthParams(flow, state.session.authProviders[state.session.selectedAuthProvider])
     window.location.href = href
@@ -152,9 +156,12 @@ export const fetchTokenThunk = createAsyncThunk(
 
     const state: RootState = thunkApi.getState() as RootState
     console.log("goToAuthThunk State :+ ", {state})
-    const tokenEndpoint = state.session.authProviders[state.session.selectedAuthProvider].tokenEndpoint
 
-    const body = buildTokenParams(flow, state.session.authProviders[state.session.selectedAuthProvider])
+    const selectedAuthProvider = Number(sessionStorage.getItem('session.selectedAuthProvider')) //state.session.selectedAuthProvider (staled)
+
+    const tokenEndpoint = state.session.authProviders[selectedAuthProvider].tokenEndpoint
+
+    const body = buildTokenParams(flow, state.session.authProviders[selectedAuthProvider])
 
     const response = await fetch(tokenEndpoint, { 
       method: "POST",
