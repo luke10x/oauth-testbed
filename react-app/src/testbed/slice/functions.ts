@@ -12,7 +12,7 @@ const buildPkceAuthParams = (flow: AuthorizationCodePkceFlow, authProvidersDetai
   body.set('redirect_uri', authProvidersDetails.redirectUri)
 
   // body.set('scope', flow.scopes.join(' '))
-  body.set('scope', 'openid profile email api offline_access')
+  body.set('scope', 'openid profile email')
   
   body.set('state', flow.stateString)
   body.set('code_challenge', flow.codeChallenge)
