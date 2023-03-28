@@ -1,5 +1,6 @@
 const prod = process.env.NODE_ENV === 'production';
 
+const CopyWebpackPlugin = require('copy-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 module.exports = {
@@ -27,8 +28,7 @@ module.exports = {
 
   devtool: prod ? undefined : 'source-map',
   plugins: [
-    new HtmlWebpackPlugin({
-      template: 'src/index.html',
-    }),
+    new CopyWebpackPlugin({ patterns: [ 'public' ] }),
+    new HtmlWebpackPlugin({ template: 'src/index.html' }),
   ],
 };
