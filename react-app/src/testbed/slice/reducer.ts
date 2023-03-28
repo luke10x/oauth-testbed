@@ -143,9 +143,9 @@ export const goToAuthThunk = createAsyncThunk(
 
     await new Promise(res => setTimeout(() => res(null), 2000))
 
-    const authenticateEndpoint = state.session.authProviders[].authenticateEndpoint
+    const authenticateEndpoint = state.session.authProviders[selectedAuthProvider].authenticateEndpoint
 
-    const href  =  authenticateEndpoint + '?' + buildPkceAuthParams(flow, state.session.authProviders[state.session.selectedAuthProvider])
+    const href  =  authenticateEndpoint + '?' + buildPkceAuthParams(flow, state.session.authProviders[selectedAuthProvider])
     window.location.href = href
   }
 )
