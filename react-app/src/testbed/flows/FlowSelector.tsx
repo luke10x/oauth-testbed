@@ -2,34 +2,34 @@ import React,{ FC, useState } from "react"
 import { useAppDispatch } from "../../app/hooks"
 import { BlueSubmit } from "../elements/BlueSubmit"
 import { RedButton } from "../elements/RedButton"
-import { FlowType, startAuthorizationCodePkceFlowThunk } from "../slice"
+import { chooseProvider, FlowType, startAuthorizationCodePkceFlowThunk } from "../slice"
 import { SelectBox } from "../ui"
 
 import config from '../config'
 
 
-const opts = config.authProviders.map((provider) => {
+const opts = config.authProviders.map((provider, key) => {
   return {
-    value: "AuthorizationCodePkce",
+    value: key,
     title: provider.name,
   }
 })
 
 interface FlowSelectorProps {}
 const FlowSelector: FC<FlowSelectorProps> = () => {
-  const [ selected, setSelected ] = useState<FlowType>("AuthorizationCodePkceFlow")
+  const [ selected, setSelected ] = useState<number>(0)
   const [ submitted, setSubmitted ] = useState<boolean>(false)
   const dispatch = useAppDispatch()
 
-  const handleChange = (value: string) => {
-    setSelected(value as FlowType)
+  const handleChange = (value: number) => {
+    setSelected(value)
+    dispatch(chooseProvider(Number(value)))
+    console.log("pasiringtas", Number(value))
   }
 
   const handleSubmit = (e: React.SyntheticEvent) => {
     e.preventDefault()
-    if (selected === "AuthorizationCodePkceFlow") {
-      dispatch(startAuthorizationCodePkceFlowThunk())
-    }
+    dispatch(startAuthorizationCodePkceFlowThunk())
     setSubmitted(true)
   }
 
@@ -41,7 +41,7 @@ const FlowSelector: FC<FlowSelectorProps> = () => {
         Please select flow
       </label>
       <div className="flex gap-2">
-        <SelectBox value="AuthorizationCodePkce"
+        <SelectBox value={selected}
           onChange={handleChange}
           options={opts}
         />

@@ -193,6 +193,9 @@ const sessionsSlice = createSlice({
   name: "sessions",
   initialState,
   reducers: {
+    chooseProvider(state, action: PayloadAction<number>) {
+      state.selectedAuthProvider = action.payload
+    },
     loadFlow: (state, action: PayloadAction<Flow>) => {
       state.flow = action.payload
       state.flow.phase = "authorized"
@@ -270,6 +273,7 @@ const sessionsSlice = createSlice({
   },
 });
 
+export const chooseProvider = sessionsSlice.actions.chooseProvider
 export const createRequest = sessionsSlice.actions.createRequest
 export const startCustomizingApiRequest = sessionsSlice.actions.startCustomizingApiRequest
 export const resetApiRequest = sessionsSlice.actions.resetApiRequest
